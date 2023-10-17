@@ -2,7 +2,7 @@
 
 # Culinary Craft
 
-This is a simple food recipe application build with advanced flutter which fetches the food recipe's from [Food Api](https://spoonacular.com/food-api) along with an added feature of contributing your own recipes.
+This is a food recipe application build with advanced flutter which fetches the food recipe's from [Food Api](https://spoonacular.com/food-api) along with an added feature of contributing your own recipes and share with the community.
 
 ## Key Features
 
