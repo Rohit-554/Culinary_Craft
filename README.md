@@ -42,6 +42,16 @@ Everyone is welcome to contribute to the project. Your single line of code can h
 
  **Feedback and Support:** We aim to provide an avenue for users to offer feedback and get timely support for their culinary queries.
 
+## screens 
+<p align = "center">
+<img src="https://github.com/Rohit-554/Fud/assets/48874687/2fdcc92e-41d6-4063-8bbe-bfefe87a0448" height="400" width="200">
+<img src="https://github.com/Rohit-554/Fud/assets/48874687/84b02578-be16-4080-a694-e4c112568f0f" height="400" width="200">
+<img src="https://github.com/Rohit-554/Fud/assets/48874687/c1447a5e-ebfd-45f2-ace3-acb516756441" height="400" width="200">
+</p>
+
+
+
+
 ## COPYRIGHT DISCLAIMER
 
 MIT License
