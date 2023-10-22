@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fud/presentation/home_screens/Home.dart';
 import 'package:fud/presentation/onboarding_screens/WelcomeScreen02.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,9 +32,15 @@ class WelcomeScreen03 extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         //Implement code
 
-        },
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+          },
+
+
+
         child: Icon(Icons.arrow_circle_right_outlined),
         backgroundColor: Colors.orangeAccent,
       ),
