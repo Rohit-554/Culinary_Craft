@@ -7,6 +7,7 @@ import 'package:fud/models/recipes/Recipe.dart';
  The endpoint's URL, along with the HTTP method (such as GET, POST, PUT, DELETE, etc.),
   defines the operation you want to perform on the API.
   example:nitdgp.org/departments/cse/sectionX/Saumya
+  HTTP,Dio search
   */
 class ApiService{
   static const String baseurl='https://api.spoonacular.com/';

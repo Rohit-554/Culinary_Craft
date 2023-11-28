@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
@@ -89,6 +91,7 @@ builder: This parameter is a callback function that takes two arguments, context
               } else {
                 // Data is available, display the recipe content
                 Recipe? recipe = snapshot.data;
+                log("${snapshot.data}");
                 return RecipeWidget(recipe as AsyncSnapshot<Recipe>); // Replace 'RecipeWidget' with your widget to display the recipe.
               }
             },
