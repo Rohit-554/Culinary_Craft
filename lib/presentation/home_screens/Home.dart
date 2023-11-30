@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fud/models/mRecipe/mRecipe.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,13 +26,15 @@ class MyHomePage extends State<Home> {
 
   void fetchrecipes() async
   {
-    try {
-      Recipe recipe = await ApiService().getrecipes();
-      print('recipe$recipe');
-    }
-    catch (e) {
-      print('error $e');
-    }
+    MRecipe recipe = await ApiService().getrecipes();
+    print('recipelengthhaiye${recipe.recipes.length}');
+    // try {
+    //   Recipe recipe = await ApiService().getrecipes();
+    //   print('recipe$recipe');
+    // }
+    // catch (e) {
+    //   print('error $e');
+    // }
   }
 
   @override
@@ -70,7 +73,7 @@ builder: This parameter is a callback function that takes two arguments, context
       children: [
         // Widget for displaying recipes goes here
         Expanded(
-          child: FutureBuilder<Recipe>(
+          child: FutureBuilder<MRecipe>(
             future: ApiService().getrecipes(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -90,9 +93,11 @@ builder: This parameter is a callback function that takes two arguments, context
                 );
               } else {
                 // Data is available, display the recipe content
-                Recipe? recipe = snapshot.data;
+                MRecipe? recipe = snapshot.data;
                 log("${snapshot.data}");
-                return RecipeWidget(recipe as AsyncSnapshot<Recipe>); // Replace 'RecipeWidget' with your widget to display the recipe.
+                return RecipeWidget(snapshot);  // working :)
+
+              //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
               }
             },
           ),
@@ -101,12 +106,13 @@ builder: This parameter is a callback function that takes two arguments, context
     );
 
   }
-  SizedBox RecipeWidget(AsyncSnapshot<Recipe> snapshot)
+  SizedBox RecipeWidget(AsyncSnapshot<MRecipe> snapshot)
   {
+    log("total elements"+snapshot.data!.recipes.length.toString());
     return SizedBox(
       child: ListView.builder(
         scrollDirection: Axis.vertical ,
-
+          itemCount: snapshot.data!.recipes.length,
           itemBuilder: (context,index){
             return SizedBox(
               height: 600,
@@ -129,7 +135,7 @@ builder: This parameter is a callback function that takes two arguments, context
                         const SizedBox(width: 8),
                         // Add some spacing between the icon and the text
                         Text(
-                          snapshot.data!.recipes[index].author,
+                          "dfad",
                           textAlign: TextAlign.start,
                           style: GoogleFonts.poppins(
                             fontSize: 16,
@@ -150,7 +156,7 @@ builder: This parameter is a callback function that takes two arguments, context
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
                             snapshot.data!.recipes[index].image,
-                            height: 540,
+                            height: 600,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),

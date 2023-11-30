@@ -1,8 +1,29 @@
+import 'dart:convert';
 
-import 'AnalyzedInstruction.dart';
-import 'ExtendedIngredient.dart';
+import '../recipes/AnalyzedInstruction.dart';
+import '../recipes/ExtendedIngredient.dart';
 
-class RecipeElement {
+MRecipe mRecipeFromJson(String str) => MRecipe.fromJson(json.decode(str));
+
+String mRecipeToJson(MRecipe data) => json.encode(data.toJson());
+
+class MRecipe {
+  List<Recipe> recipes;
+
+  MRecipe({
+    required this.recipes,
+  });
+
+  factory MRecipe.fromJson(Map<String, dynamic> json) => MRecipe(
+    recipes: List<Recipe>.from(json["recipes"].map((x) => Recipe.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "recipes": List<dynamic>.from(recipes.map((x) => x.toJson())),
+  };
+}
+
+class Recipe {
   bool vegetarian;
   bool vegan;
   bool glutenFree;
@@ -40,7 +61,7 @@ class RecipeElement {
   double spoonacularScore;
   String spoonacularSourceUrl;
 
-  RecipeElement({
+  Recipe({
     required this.vegetarian,
     required this.vegan,
     required this.glutenFree,
@@ -79,7 +100,7 @@ class RecipeElement {
     required this.spoonacularSourceUrl,
   });
 
-  factory RecipeElement.fromJson(Map<String, dynamic> json) => RecipeElement(
+  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
     vegetarian: json["vegetarian"],
     vegan: json["vegan"],
     glutenFree: json["glutenFree"],

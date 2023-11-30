@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fud/models/mRecipe/mRecipe.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 //ApiService defines the end points of the api
 /*An API typically consists of multiple endpoints,
@@ -23,7 +24,7 @@ class ApiService{
   indicating that it will eventually provide a Recipe object
   when the asynchronous operation finishes.
   */
-  Future<Recipe> getrecipes() async{
+  Future<MRecipe> getrecipes() async{
     try
         {
          dio=Dio();
@@ -31,8 +32,8 @@ class ApiService{
          final Response response=await dio.get('$baseurl$endpoint',queryParameters: {
            'apiKey':apiKey,
          });
-         print("response$response");
-         Recipe recipes=Recipe.fromJson(response.data);
+         print("response${response.data}");
+         MRecipe recipes=MRecipe.fromJson(response.data);
          return recipes;
         }
      on DioException catch(e){
