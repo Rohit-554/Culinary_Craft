@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fud/presentation/auth_screens/LoginScreen.dart';
 import 'package:fud/presentation/onboarding_screens/WelcomeScreen01.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
 
       ),
-      home: WelcomeScreen01(),
+      home: LoginScreen(),
     );
   }
 }
