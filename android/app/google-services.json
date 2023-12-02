@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "268013733765",
-    "project_id": "flutter-auth-9b758",
-    "storage_bucket": "flutter-auth-9b758.appspot.com"
+    "project_number": "698403316332",
+    "project_id": "culinary-craft",
+    "storage_bucket": "culinary-craft.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:268013733765:android:cffa8cfe92e832f726e6ec",
+        "mobilesdk_app_id": "1:698403316332:android:09418ec8a306b41f5bae49",
         "android_client_info": {
           "package_name": "com.example.fud"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "698403316332-n21bb8e4pg0c9uu85hjoh79vkd7uv8eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyA9bZgsJjGlx-cpt-b5R9gaibTC47MuhrY"
+          "current_key": "AIzaSyAjzKV5GRZ-tEAGGjk-Ko822Y3bv388JNk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698403316332-n21bb8e4pg0c9uu85hjoh79vkd7uv8eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -14,6 +14,7 @@ class MyLoginScreen extends State<LoginScreen> {
     return Scaffold(
         body: Center(
       child: LoginScreenUI(),
+          heightFactor: 1.6,
     ));
   }
 }
@@ -39,7 +40,7 @@ padding: EdgeInsets.only(top: 0),
             ),
           ],
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -52,31 +53,50 @@ padding: EdgeInsets.only(top: 0),
           ],
         ),
         Padding(padding:
-        EdgeInsets.only(top: 28,left: 20,right: 20,bottom: 20),
+        const EdgeInsets.only(top: 28,left: 20,right: 20,bottom: 20),
             child: RoundedEditText( hint: 'Email Address')
         ),
 
         Padding(padding:
-        EdgeInsets.only(top: 4,left: 20,right: 20,bottom: 0),
+        const EdgeInsets.only(top: 4,left: 20,right: 20,bottom: 0),
             child: RoundedEditText( hint: 'Password')
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
               padding: EdgeInsets.only(top: 8,right: 20,bottom: 8),
               child: Text(
                 "Forgot Password?",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: CupertinoColors.systemGrey),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Colors.blueAccent),
               ),
             ),
           ],
         ),
-        Padding(padding: EdgeInsets.only(top: 40,left: 20,right: 20,bottom: 0),
+        Padding(padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
         child:
             RoundedButton(text: 'Login', onPressed: () {  },),
-        )
+        ),
+       const Row(
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+           Padding(
+             padding: EdgeInsets.only(top: 16),
+             child:  Text(
+               "New User? ",
+               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: CupertinoColors.systemGrey),
+             ),
+           ),
+           Padding(
+             padding: EdgeInsets.only(top: 16),
+             child:  Text(
+               "Sign Up",
+               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.blueAccent),
+             ),
+           ),
+         ],
 
+       )
       ],
 
     ),
