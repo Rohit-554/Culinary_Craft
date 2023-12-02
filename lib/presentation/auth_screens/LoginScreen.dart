@@ -20,7 +20,8 @@ class MyLoginScreen extends State<LoginScreen> {
 }
 
 SingleChildScrollView LoginScreenUI() {
-
+  TextEditingController _textController = TextEditingController();
+  TextEditingController _textController1 = TextEditingController();
   return SingleChildScrollView(
 padding: EdgeInsets.only(top: 0),
     child:  Column(
@@ -54,12 +55,12 @@ padding: EdgeInsets.only(top: 0),
         ),
         Padding(padding:
         const EdgeInsets.only(top: 28,left: 20,right: 20,bottom: 20),
-            child: RoundedEditText( hint: 'Email Address')
+            child: RoundedEditText( hint: 'Email Address',controller: _textController,)
         ),
 
         Padding(padding:
         const EdgeInsets.only(top: 4,left: 20,right: 20,bottom: 0),
-            child: RoundedEditText( hint: 'Password')
+            child: RoundedEditText( hint: 'Password',controller: _textController1,)
         ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.end,

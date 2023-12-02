@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 class RoundedEditText extends StatefulWidget {
   final String hint;
-
-  RoundedEditText({required this.hint});
+ final TextEditingController controller;
+  RoundedEditText({required this.hint, required this.controller});
 
   @override
   _RoundedEditTextState createState() => _RoundedEditTextState();
-  TextEditingController getTextController(){
-    return _RoundedEditTextState()._textController;
-  }
+
 }
 
 class _RoundedEditTextState extends State<RoundedEditText> {

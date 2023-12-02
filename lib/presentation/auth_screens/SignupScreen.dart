@@ -24,7 +24,8 @@ class MySignupScreen extends State<SignupScreen> {
 }
 
 SingleChildScrollView SignupScreenUI() {
-
+  TextEditingController _textController = TextEditingController();
+  TextEditingController _textController1 = TextEditingController();
   return SingleChildScrollView(
     padding: EdgeInsets.only(top: 0),
     child:  Column(
@@ -58,12 +59,12 @@ SingleChildScrollView SignupScreenUI() {
         ),
         Padding(padding:
         const EdgeInsets.only(top: 28,left: 20,right: 20,bottom: 20),
-            child: RoundedEditText( hint: 'Email Address')
+            child: RoundedEditText( hint: 'Email Address',controller: _textController,)
         ),
 
         Padding(padding:
         const EdgeInsets.only(top: 4,left: 20,right: 20,bottom: 0),
-            child: RoundedEditText( hint: 'Password',)
+            child: RoundedEditText( hint: 'Password',controller: _textController1,)
         ),
 
         Padding(padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
@@ -71,7 +72,7 @@ SingleChildScrollView SignupScreenUI() {
           RoundedButton(text: 'Sign Up', onPressed: ()async {
 
 
-           await signupWithEmailAndPassword(email, password);
+           await signupWithEmailAndPassword(_textController.text, _textController1.text);
 
           },),
         ),
