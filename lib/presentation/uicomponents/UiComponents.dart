@@ -22,7 +22,7 @@ class _RoundedEditTextState extends State<RoundedEditText> {
         color: Colors.grey[200],
       ),
       child: TextFormField(
-        controller: _textController,
+        controller: widget.controller,
         decoration: InputDecoration(
           hintText: widget.hint,
           border: InputBorder.none,
@@ -32,6 +32,6 @@ class _RoundedEditTextState extends State<RoundedEditText> {
   }
 
   String getEnteredText() {
-    return _textController.text;
+    return widget.controller.text;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/models/mRecipe/mRecipe.dart';
 import 'package:fud/models/recipes/Recipe.dart';
@@ -20,8 +21,10 @@ class MyHomePage extends State<Home> {
 
   @override
   void initState() {
+
     super.initState();
     fetchrecipes();
+    userLogOut();
   }
 
   void fetchrecipes() async
@@ -231,4 +234,8 @@ builder: This parameter is a callback function that takes two arguments, context
     );
   }
 
+}
+void userLogOut()async
+{
+  FirebaseAuth.instance.signOut();
 }

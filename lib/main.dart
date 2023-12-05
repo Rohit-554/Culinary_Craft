@@ -8,7 +8,7 @@ import 'package:fud/presentation/onboarding_screens/WelcomeScreen01.dart';
 import 'firebase_options.dart';
 
 void main ()async {
-  //WidgetsFlutterBinding.ensureInitialized();//ensures all UI components are ready
+  WidgetsFlutterBinding.ensureInitialized();//ensures all UI components are ready
   //await Firebase.initializeApp();//this and above line performs first then void main runs to run thr app
 
   await Firebase.initializeApp(
