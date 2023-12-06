@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/presentation/uicomponents/ButtonComponent.dart';
@@ -56,6 +57,7 @@ padding: EdgeInsets.only(top: 0),
         Padding(padding:
         const EdgeInsets.only(top: 28,left: 20,right: 20,bottom: 20),
             child: RoundedEditText( hint: 'Email Address',controller: _textController,)
+
         ),
 
         Padding(padding:
@@ -76,7 +78,11 @@ padding: EdgeInsets.only(top: 0),
         ),
         Padding(padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
         child:
-            RoundedButton(text: 'Login', onPressed: () {  },),
+            RoundedButton(text: 'Login', onPressed: ()async {
+              print("value of email address ${_textController.text}");
+              print("value of password ${_textController1.text}");
+              await loginWithEmailAndPassword(_textController.text, _textController1.text);
+            },),
         ),
        const Row(
          mainAxisAlignment: MainAxisAlignment.center,
@@ -102,6 +108,30 @@ padding: EdgeInsets.only(top: 0),
 
     ),
   );
+}
 
+Future<void> loginWithEmailAndPassword(String email, String password) async {
+  try {
+    // Attempt to sign in the user with the provided email and password
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
 
+    // If the sign-in is successful, you can perform additional actions here
+    print('User signed in successfully.');
+  } on FirebaseAuthException catch (e) {
+    // Handle specific errors that might occur during the sign-in process
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    } else {
+      // Handle other FirebaseAuthException types if needed
+      print('Error during sign-in: ${e.message}');
+    }
+  } catch (e) {
+    // Handle general exceptions that might occur
+    print('Unexpected error during sign-in: $e');
+  }
 }
