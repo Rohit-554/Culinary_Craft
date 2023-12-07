@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fud/presentation/auth_screens/LoginScreen.dart';
+import 'package:fud/presentation/auth_screens/SignupScreen.dart';
 import 'package:fud/presentation/onboarding_screens/WelcomeScreen01.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main ()async {
+  WidgetsFlutterBinding.ensureInitialized();//ensures all UI components are ready
+  //await Firebase.initializeApp();//this and above line performs first then void main runs to run thr app
+
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
@@ -19,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
 
       ),
-      home: WelcomeScreen01(),
+      home: LoginScreen(),
     );
   }
 }
