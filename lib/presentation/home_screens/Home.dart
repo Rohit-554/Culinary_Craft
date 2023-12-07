@@ -24,7 +24,7 @@ class MyHomePage extends State<Home> {
 
     super.initState();
     fetchrecipes();
-    userLogOut();
+    // userLogOut();
   }
 
   void fetchrecipes() async
@@ -46,11 +46,20 @@ class MyHomePage extends State<Home> {
       (
 
       appBar: AppBar(
-        title: Text('Dio Test'),
+        title: const Text('Home'),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              userLogOut();
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Center(
-        child: getrecipesUI()
-        ,
+        child: getrecipesUI(),
       ),
 
     );
@@ -81,7 +90,7 @@ builder: This parameter is a callback function that takes two arguments, context
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Show a loading indicator while fetching data
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
@@ -91,7 +100,7 @@ builder: This parameter is a callback function that takes two arguments, context
                 );
               } else if (!snapshot.hasData) {
                 // Handle the case when no data is available
-                return Center(
+                return const Center(
                   child: Text('No recipe data available.'),
                 );
               } else {

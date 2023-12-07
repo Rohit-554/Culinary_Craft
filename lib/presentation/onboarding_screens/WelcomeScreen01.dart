@@ -18,7 +18,7 @@ class WelcomeScreen01 extends StatelessWidget {
                 height: 200,
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 20),
               child: Text(
                 "Dive into the culinary symphony of flavorful discoveries",

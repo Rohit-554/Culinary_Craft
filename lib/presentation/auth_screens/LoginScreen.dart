@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fud/presentation/auth_screens/SignupScreen.dart';
+import 'package:fud/presentation/home_screens/Home.dart';
 import 'package:fud/presentation/uicomponents/ButtonComponent.dart';
 import 'package:fud/presentation/uicomponents/UiComponents.dart';
 
@@ -12,15 +14,16 @@ class LoginScreen extends StatefulWidget {
 class MyLoginScreen extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    isUserExisting(context);
     return Scaffold(
         body: Center(
-      child: LoginScreenUI(),
+      child: LoginScreenUI(context),
           heightFactor: 1.6,
     ));
   }
 }
 
-SingleChildScrollView LoginScreenUI() {
+SingleChildScrollView LoginScreenUI(BuildContext context) {
   TextEditingController _textController = TextEditingController();
   TextEditingController _textController1 = TextEditingController();
   return SingleChildScrollView(
@@ -79,15 +82,15 @@ padding: EdgeInsets.only(top: 0),
         Padding(padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
         child:
             RoundedButton(text: 'Login', onPressed: ()async {
-              print("value of email address ${_textController.text}");
+              print("value of email address ${_textController.text.trim()}");
               print("value of password ${_textController1.text}");
-              await loginWithEmailAndPassword(_textController.text, _textController1.text);
+              await loginWithEmailAndPassword(_textController.text.trim(), _textController1.text.trim(),context);
             },),
         ),
-       const Row(
+        Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           Padding(
+           const Padding(
              padding: EdgeInsets.only(top: 16),
              child:  Text(
                "New User? ",
@@ -96,10 +99,23 @@ padding: EdgeInsets.only(top: 0),
            ),
            Padding(
              padding: EdgeInsets.only(top: 16),
-             child:  Text(
-               "Sign Up",
-               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.blueAccent),
+             child:
+             GestureDetector(
+               onTap: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) =>  SignupScreen()),
+                 );
+               },
+                child: const Text(
+                  "Sign Up",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.blueAccent),
+                ),
              ),
+             // Text(
+             //   "Sign Up",
+             //   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: Colors.blueAccent),
+             // ),
            ),
          ],
 
@@ -109,17 +125,28 @@ padding: EdgeInsets.only(top: 0),
     ),
   );
 }
+void isUserExisting(BuildContext context) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  if (user != null) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  } else {
+    print("User is null");
+  }
+}
 
-Future<void> loginWithEmailAndPassword(String email, String password) async {
+Future<void> loginWithEmailAndPassword(String email, String password, BuildContext context) async {
   try {
     // Attempt to sign in the user with the provided email and password
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-
-    // If the sign-in is successful, you can perform additional actions here
     print('User signed in successfully.');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  Home()),
+    );
   } on FirebaseAuthException catch (e) {
     // Handle specific errors that might occur during the sign-in process
     if (e.code == 'user-not-found') {

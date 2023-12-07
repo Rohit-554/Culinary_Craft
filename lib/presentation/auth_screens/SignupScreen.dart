@@ -84,7 +84,7 @@ SingleChildScrollView SignupScreenUI(BuildContext context) {
               print("value of email address ${_textController.text}");
               print("value of password ${_textController1.text}");
               await signupWithEmailAndPassword(
-                  _textController.text, _textController1.text);
+                  _textController.text.trim(), _textController1.text.trim(),context);
             },
           ),
         ),
@@ -145,12 +145,17 @@ SingleChildScrollView SignupScreenUI(BuildContext context) {
   );
 }
 
-Future<void> signupWithEmailAndPassword(String email, String password) async {
+Future<void> signupWithEmailAndPassword(String email, String password, BuildContext context) async {
   try {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
-        password:
-            password); //all authentication services of firebase can be accessed through FirebaseAuth.instance
+        password: password); //all authentication services of firebase can be accessed through FirebaseAuth.instance
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  Home()),
+    );
+
     print('user registered successfully');
   } catch (e) {
     print('error in registering user$e');
