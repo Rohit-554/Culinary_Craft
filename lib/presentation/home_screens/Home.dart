@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fud/colors/Colors.dart';
 import 'package:fud/models/mRecipe/mRecipe.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
@@ -42,6 +43,7 @@ class MyHomePage extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    int currrentindex=0;
     return Scaffold
       (
 
@@ -53,16 +55,68 @@ class MyHomePage extends State<Home> {
             icon: Icon(Icons.logout),
             onPressed: () {
               userLogOut();
-              Navigator.pop(context);
+              //Navigator.pop(context);
             },
           ),
         ],
       ),
       body: Center(
-        child: getrecipesUI(),
+        //child: getrecipesUI(),
+        
       ),
+      
+      bottomNavigationBar: BottomAppBar(
+        // currentIndex:currrentindex ,
+        //
+        // backgroundColor: bottomNavbarColor,
+        // onTap: (int index){
+        //   setState(() {
+        //     currrentindex=index;
+        //     print("index$index");
+        //   });
+        //
+        // },
+        //
+        // items: [
+        //   BottomNavigationBarItem(icon: Icon(Icons.search_rounded),label: 'Search'),
+        //
+        //   BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded),label: 'Profile'),
+        // ],
+        // selectedItemColor: textOrange,
+        // unselectedItemColor: Colors.black,
+        shape: CircularNotchedRectangle(),
+        color: bottomNavbarColor,
+        child: Container(
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.search_rounded,)),
+              SizedBox(
+                width: 40,
 
+              ),
+              IconButton(onPressed: (){}, icon: Icon(Icons.person_outline_rounded,)),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: fabButton,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
+        onPressed: (){
+
+        },
+        child: Icon(Icons.add,color: Colors.white,),
+
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+    Widget buildbody(){
+
+    }
+
+
   }
 /*
 In Flutter, the FutureBuilder widget is used to asynchronously
@@ -147,7 +201,7 @@ builder: This parameter is a callback function that takes two arguments, context
                         const SizedBox(width: 8),
                         // Add some spacing between the icon and the text
                         Text(
-                          "dfad",
+                          "hello",
                           textAlign: TextAlign.start,
                           style: GoogleFonts.poppins(
                             fontSize: 16,
@@ -248,3 +302,4 @@ void userLogOut()async
 {
   FirebaseAuth.instance.signOut();
 }
+
