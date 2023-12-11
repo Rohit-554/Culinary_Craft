@@ -26,7 +26,7 @@ class MyHomePage extends State<Home> {
   void initState() {
 
     super.initState();
-    fetchrecipes();
+    // fetchrecipes();
     // userLogOut();
   }
 
@@ -48,7 +48,6 @@ class MyHomePage extends State<Home> {
     int currrentindex=0;
     return Scaffold
       (
-
       appBar: AppBar(
         title: const Text('Home'),
         automaticallyImplyLeading: false,
@@ -63,8 +62,7 @@ class MyHomePage extends State<Home> {
         ],
       ),
       body: Center(
-        //child: getrecipesUI(),
-        
+        child: getrecipesUI(),
       ),
 
       bottomNavigationBar: Container(
@@ -133,46 +131,46 @@ builder: This parameter is a callback function that takes two arguments, context
       children: [
         // Widget for displaying recipes goes here
         Expanded(
-          child: FutureBuilder<ERecipe>(
-            future: ApiService().getrecipes(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Show a loading indicator while fetching data
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                // Handle error state
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
-              } else if (!snapshot.hasData) {
-                // Handle the case when no data is available
-                return const Center(
-                  child: Text('No recipe data available.'),
-                );
-              } else {
-                // Data is available, display the recipe content
-                ERecipe? recipe = snapshot.data;
-                log("${snapshot.data}");
-                return RecipeWidget(snapshot);  // working :)
-
-              //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
-              }
-            },
-          ),
-        ),
-      ],
+      child: FutureBuilder<ERecipe>(
+        future: ApiService().getrecipes(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while fetching data
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            // Handle error state
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else if (!snapshot.hasData) {
+            // Handle the case when no data is available
+            return const Center(
+              child: Text('No recipe data available.'),
+            );
+          } else {
+            // Data is available, display the recipe content
+            ERecipe? recipe = snapshot.data;
+            log("${snapshot.data}");
+            return RecipeWidget(snapshot);  // working :)
+            //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
+          }
+        },
+      ),
+    ),
+    ],
     );
 
   }
   SizedBox RecipeWidget(AsyncSnapshot<ERecipe> snapshot)
   {
+    // print('recipelengthhaiye${snapshot.data?.hints.length}');
     //log("total elements"+snapshot.data!.recipes.length.toString());
     return SizedBox(
       child: ListView.builder(
-        scrollDirection: Axis.vertical ,
-          //itemCount: snapshot.data!.recipes.length,
+        scrollDirection: Axis.vertical,
+          itemCount: snapshot.data!.hints.length,
           itemBuilder: (context,index){
             return SizedBox(
               height: 600,
@@ -207,6 +205,7 @@ builder: This parameter is a callback function that takes two arguments, context
                   ),
                   Card(
                     elevation: 4,
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -214,13 +213,16 @@ builder: This parameter is a callback function that takes two arguments, context
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            snapshot.data!.hints[0].food.image!,
+                          child: snapshot.data != null && snapshot.data!.hints != null && index < snapshot.data!.hints.length
+                              ? Image.network(
+                            snapshot.data!.hints[index].food.image ?? '', // Provide a default value or handle null appropriately
                             height: 400,
                             width: double.infinity,
                             fit: BoxFit.cover,
-                          ),
+                          )
+                              : Container(), // You can provide a placeholder or an empty container when data is null
                         ),
+
                         Positioned(
                             bottom: 8,
                             left: 8,

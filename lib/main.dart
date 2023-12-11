@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fud/presentation/auth_screens/LoginScreen.dart';
 import 'package:fud/presentation/auth_screens/SignupScreen.dart';
 import 'package:fud/presentation/onboarding_screens/WelcomeScreen01.dart';
+import 'package:fud/presentation/routes/AppRouter.dart';
 
 import 'firebase_options.dart';
 
@@ -20,7 +21,6 @@ void main ()async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

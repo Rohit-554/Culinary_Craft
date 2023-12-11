@@ -2,7 +2,7 @@ import 'Qualifier.dart';
 
 class Qualified {
   List<Qualifier> qualifiers;
-  int weight;
+  double weight;
 
   Qualified({
     required this.qualifiers,
