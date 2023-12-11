@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:fud/presentation/home_screens/Home.dart';
 import 'package:fud/presentation/uicomponents/ButtonComponent.dart';
 import 'package:fud/presentation/uicomponents/UiComponents.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   @override
   MyLoginScreen createState() => MyLoginScreen();
@@ -121,7 +123,6 @@ padding: EdgeInsets.only(top: 0),
 
        )
       ],
-
     ),
   );
 }
