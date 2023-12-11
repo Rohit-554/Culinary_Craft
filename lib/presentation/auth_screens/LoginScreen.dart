@@ -130,7 +130,23 @@ void isUserExisting(BuildContext context) async {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   if (user != null) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+   // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    Future.delayed(Duration.zero, () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    });
+    /* Duration.zero is used as the delay duration.
+ The Duration.zero represents a duration of zero seconds,
+ meaning there is no delay at all. So, essentially,
+ the callback function inside Future.delayed will be executed immediately, without any delay.
+In this specific context, it might seem redundant to use Future.
+delayed with a zero duration because you could achieve the same result by
+directly calling the Navigator.push method without introducing a delay.
+However, in some scenarios, developers might use Future.
+delayed with a zero duration as a way to schedule the execution of code
+to happen in the next event loop iteration.
+This can be useful in certain cases where you want to
+ensure that some code runs after the current frame of execution.
+*/
   } else {
     print("User is null");
   }

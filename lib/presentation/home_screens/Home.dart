@@ -8,6 +8,8 @@ import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/eRecipe/ERecipe.dart';
+
 class Home extends StatefulWidget {
 
 
@@ -30,8 +32,8 @@ class MyHomePage extends State<Home> {
 
   void fetchrecipes() async
   {
-    MRecipe recipe = await ApiService().getrecipes();
-    print('recipelengthhaiye${recipe.recipes.length}');
+    ERecipe recipe = await ApiService().getrecipes();
+    print('recipelengthhaiye${recipe.hints.length}');
     // try {
     //   Recipe recipe = await ApiService().getrecipes();
     //   print('recipe$recipe');
@@ -64,40 +66,32 @@ class MyHomePage extends State<Home> {
         //child: getrecipesUI(),
         
       ),
-      
-      bottomNavigationBar: BottomAppBar(
-        // currentIndex:currrentindex ,
-        //
-        // backgroundColor: bottomNavbarColor,
-        // onTap: (int index){
-        //   setState(() {
-        //     currrentindex=index;
-        //     print("index$index");
-        //   });
-        //
-        // },
-        //
-        // items: [
-        //   BottomNavigationBarItem(icon: Icon(Icons.search_rounded),label: 'Search'),
-        //
-        //   BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded),label: 'Profile'),
-        // ],
-        // selectedItemColor: textOrange,
-        // unselectedItemColor: Colors.black,
-        shape: CircularNotchedRectangle(),
-        color: bottomNavbarColor,
-        child: Container(
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.search_rounded,)),
-              SizedBox(
-                width: 40,
 
-              ),
-              IconButton(onPressed: (){}, icon: Icon(Icons.person_outline_rounded,)),
-            ],
+      bottomNavigationBar: Container(
+        color: Colors.transparent,
+        height: 60,
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          color: bottomNavbarColor,
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    print("home");
+                  },
+                  icon: Icon(Icons.search_rounded),
+                ),
+                IconButton(
+                  onPressed: () {
+                    print("home");
+                  },
+                  icon: Icon(Icons.person_outline_rounded),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -139,7 +133,7 @@ builder: This parameter is a callback function that takes two arguments, context
       children: [
         // Widget for displaying recipes goes here
         Expanded(
-          child: FutureBuilder<MRecipe>(
+          child: FutureBuilder<ERecipe>(
             future: ApiService().getrecipes(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -159,7 +153,7 @@ builder: This parameter is a callback function that takes two arguments, context
                 );
               } else {
                 // Data is available, display the recipe content
-                MRecipe? recipe = snapshot.data;
+                ERecipe? recipe = snapshot.data;
                 log("${snapshot.data}");
                 return RecipeWidget(snapshot);  // working :)
 
@@ -172,13 +166,13 @@ builder: This parameter is a callback function that takes two arguments, context
     );
 
   }
-  SizedBox RecipeWidget(AsyncSnapshot<MRecipe> snapshot)
+  SizedBox RecipeWidget(AsyncSnapshot<ERecipe> snapshot)
   {
-    log("total elements"+snapshot.data!.recipes.length.toString());
+    //log("total elements"+snapshot.data!.recipes.length.toString());
     return SizedBox(
       child: ListView.builder(
         scrollDirection: Axis.vertical ,
-          itemCount: snapshot.data!.recipes.length,
+          //itemCount: snapshot.data!.recipes.length,
           itemBuilder: (context,index){
             return SizedBox(
               height: 600,
@@ -221,7 +215,7 @@ builder: This parameter is a callback function that takes two arguments, context
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            snapshot.data!.recipes[index].image,
+                            snapshot.data!.hints[0].food.image!,
                             height: 400,
                             width: double.infinity,
                             fit: BoxFit.cover,
