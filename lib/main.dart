@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fud/presentation/auth_screens/LoginScreen.dart';
 import 'package:fud/presentation/auth_screens/SignupScreen.dart';
 import 'package:fud/presentation/onboarding_screens/WelcomeScreen01.dart';
@@ -10,7 +11,7 @@ import 'firebase_options.dart';
 void main ()async {
   WidgetsFlutterBinding.ensureInitialized();//ensures all UI components are ready
   //await Firebase.initializeApp();//this and above line performs first then void main runs to run thr app
-
+  await dotenv.load(fileName: "keys.env");
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
