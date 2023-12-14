@@ -11,27 +11,19 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/eRecipe/ERecipe.dart';
 
 class Home extends StatefulWidget {
-
-
   @override
   MyHomePage createState() => MyHomePage();
-
-
 }
 
 class MyHomePage extends State<Home> {
-
-
   @override
   void initState() {
-
     super.initState();
     // fetchrecipes();
     // userLogOut();
   }
 
-  void fetchrecipes() async
-  {
+  void fetchrecipes() async {
     ERecipe recipe = await ApiService().getrecipes();
     print('recipelengthhaiye${recipe.hints.length}');
     // try {
@@ -45,9 +37,8 @@ class MyHomePage extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    int currrentindex=0;
-    return Scaffold
-      (
+    int currrentindex = 0;
+    return Scaffold(
       appBar: AppBar(
         title: const Text(''),
         backgroundColor: Colors.white,
@@ -55,15 +46,12 @@ class MyHomePage extends State<Home> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.favorite_outline_sharp)),
+              onPressed: () {}, icon: Icon(Icons.favorite_outline_sharp)),
           IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.notifications_none_sharp)),
+              onPressed: () {}, icon: Icon(Icons.notifications_none_sharp)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-
               userLogOut();
 
               //Navigator.pop(context);
@@ -71,12 +59,9 @@ class MyHomePage extends State<Home> {
           ),
         ],
       ),
-
       body: Center(
-
         child: getrecipesUI(),
       ),
-
       bottomNavigationBar: Container(
         color: Colors.transparent,
         height: 60,
@@ -108,20 +93,17 @@ class MyHomePage extends State<Home> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: fabButton,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
-        onPressed: (){
-
-        },
-        child: Icon(Icons.add,color: Colors.white,),
-
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-    Widget buildbody(){
-
-    }
-
-
+    Widget buildbody() {}
   }
+
 /*
 In Flutter, the FutureBuilder widget is used to asynchronously
  build the UI based on the result of a Future.
@@ -138,201 +120,220 @@ builder: This parameter is a callback function that takes two arguments, context
    has completed successfully, or encountered an error.
 */
   Column getrecipesUI() {
-
     return Column(
-
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Widget for displaying recipes goes here
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            greetWidget(),
-
-          ],
-        ),
         Expanded(
-      child: FutureBuilder<ERecipe>(
-        future: ApiService().getrecipes(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // Show a loading indicator while fetching data
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            // Handle error state
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else if (!snapshot.hasData) {
-            // Handle the case when no data is available
-            return const Center(
-              child: Text('No recipe data available.'),
-            );
-          } else {
-            // Data is available, display the recipe content
-            ERecipe? recipe = snapshot.data;
-            log("${snapshot.data}");
-            return RecipeWidget(snapshot);  // working :)
-            //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
-          }
-        },
-      ),
-    ),
-    ],
+          child: FutureBuilder<ERecipe>(
+            future: ApiService().getrecipes(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Show a loading indicator while fetching data
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                // Handle error state
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else if (!snapshot.hasData) {
+                // Handle the case when no data is available
+                return const Center(
+                  child: Text('No recipe data available.'),
+                );
+              } else {
+                // Data is available, display the recipe content
+                ERecipe? recipe = snapshot.data;
+                log("${snapshot.data}");
+                return RecipeWidget(snapshot); // working :)
+                //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
+              }
+            },
+          ),
+        ),
+      ],
     );
-
   }
-  SizedBox RecipeWidget(AsyncSnapshot<ERecipe> snapshot)
-  {
+
+  SingleChildScrollView RecipeWidget(AsyncSnapshot<ERecipe> snapshot) {
     // print('recipelengthhaiye${snapshot.data?.hints.length}');
     //log("total elements"+snapshot.data!.recipes.length.toString());
-    return SizedBox(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-          itemCount: snapshot.data!.hints.length,
-          itemBuilder: (context,index){
-            return SizedBox(
-              height: 600,
-              child: Column(
-                children: [
-
-                  Container(
-                    height: 40,
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      // Vertically center the icon and text
-                      children: [
-                        const Icon(
-                          Icons.account_circle,
-                          // Replace this with the icon you want to use for the profile
-                          size: 24,
-                          color: Colors.black,
+    return SingleChildScrollView(
+      child: Column (
+        children: [
+          greetWidget(),
+          ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemCount: snapshot.data!.hints.length,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  height: 600,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          // Vertically center the icon and text
+                          children: [
+                            const Icon(
+                              Icons.account_circle,
+                              // Replace this with the icon you want to use for the profile
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(width: 8),
+                            // Add some spacing between the icon and the text
+                            Text(
+                              "hello",
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 8),
-                        // Add some spacing between the icon and the text
-                        Text(
-                          "hello",
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Stack(
-                      children: [
-                        ClipRRect(
+                      ),
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          child: snapshot.data != null && snapshot.data!.hints != null && index < snapshot.data!.hints.length
-                              ? Image.network(
-                            snapshot.data!.hints[index].food.image ?? '', // Provide a default value or handle null appropriately
-                            height: 400,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )
-                              : Container(), // You can provide a placeholder or an empty container when data is null
                         ),
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: snapshot.data != null &&
+                                  snapshot.data!.hints != null &&
+                                  index < snapshot.data!.hints.length
+                                  ? Image.network(
+                                snapshot.data!.hints[index].food.image ?? '',
+                                // Provide a default value or handle null appropriately
+                                height: 400,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              )
+                                  : Container(), // You can provide a placeholder or an empty container when data is null
+                            ),
 
-                        Positioned(
-                            bottom: 8,
-                            left: 8,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.favorite_border,
-                                  size: 24,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    // Toggle the 'liked' state of the photo
-                                   // snapshot.data!.photos[index].liked =
-                                    //!snapshot.data!.photos[index].liked;
-                                  });
-                                },
-                              ),
-                            )),
+                            Positioned(
+                                bottom: 8,
+                                left: 8,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.favorite_border,
+                                      size: 24,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        // Toggle the 'liked' state of the photo
+                                        // snapshot.data!.photos[index].liked =
+                                        //!snapshot.data!.photos[index].liked;
+                                      });
+                                    },
+                                  ),
+                                )),
 
-                        //download section
-                        // Positioned(
-                        //     bottom: 8,
-                        //     right: 8,
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.black.withOpacity(0.5),
-                        //         borderRadius: BorderRadius.circular(10),
-                        //       ),
-                        //       child: IconButton(
-                        //         icon: isDownloading
-                        //             ? const Icon(
-                        //           Icons.download,
-                        //           color: Colors.white,
-                        //           size: 24,
-                        //         )
-                        //             : const Icon(
-                        //           Icons.downloading,
-                        //           color: Colors.white,
-                        //           size: 24,
-                        //         ),
-                        //         onPressed: () {
-                        //           isDownloading = true;
-                        //           Icons.downloading;
-                        //           String url =
-                        //               snapshot.data!.photos[index].src.original;
-                        //           String fileName =
-                        //           snapshot.data!.photos[index].id.toString();
-                        //           showDialog(
-                        //               context: context,
-                        //               builder: (context) =>
-                        //                   DownloadingDialog(url, fileName));
-                        //         },
-                        //       ),
-                        //     ))
-                      ],
-                    ),
+                            //download section
+                            // Positioned(
+                            //     bottom: 8,
+                            //     right: 8,
+                            //     child: Container(
+                            //       decoration: BoxDecoration(
+                            //         color: Colors.black.withOpacity(0.5),
+                            //         borderRadius: BorderRadius.circular(10),
+                            //       ),
+                            //       child: IconButton(
+                            //         icon: isDownloading
+                            //             ? const Icon(
+                            //           Icons.download,
+                            //           color: Colors.white,
+                            //           size: 24,
+                            //         )
+                            //             : const Icon(
+                            //           Icons.downloading,
+                            //           color: Colors.white,
+                            //           size: 24,
+                            //         ),
+                            //         onPressed: () {
+                            //           isDownloading = true;
+                            //           Icons.downloading;
+                            //           String url =
+                            //               snapshot.data!.photos[index].src.original;
+                            //           String fileName =
+                            //           snapshot.data!.photos[index].id.toString();
+                            //           showDialog(
+                            //               context: context,
+                            //               builder: (context) =>
+                            //                   DownloadingDialog(url, fileName));
+                            //         },
+                            //       ),
+                            //     ))
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-
-      ),
+                );
+              }),
+        ],
+      )
     );
   }
-
 }
-void userLogOut()async
-{
+
+void userLogOut() async {
   FirebaseAuth.instance.signOut();
 }
 
-Column greetWidget()
-{
+Column greetWidget() {
   return Column(
     children: [
-      Text('Hi, ${getUsername()}!',style: TextStyle(fontWeight: FontWeight.bold),)
+       Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 20,left: 8),
+            child: Text(
+              "Hello, ",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: 20,left: 8),
+            child: Text(
+              getUsername() ?? "User",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+
+          ),
+
+        ],
+
+      ),
+
+
     ],
   );
 }
 
-String? getUsername()
-{
-  var username=FirebaseAuth.instance.currentUser?.displayName;
+String? getUsername() {
+  var username = FirebaseAuth.instance.currentUser?.displayName;
   return username;
-
 }
