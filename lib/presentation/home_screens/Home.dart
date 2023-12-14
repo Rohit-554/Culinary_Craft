@@ -49,19 +49,31 @@ class MyHomePage extends State<Home> {
     return Scaffold
       (
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(''),
+        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0.0,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.favorite_outline_sharp)),
+          IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.notifications_none_sharp)),
+          IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
+
               userLogOut();
+
               //Navigator.pop(context);
             },
           ),
         ],
       ),
+
       body: Center(
+
         child: getrecipesUI(),
       ),
 
@@ -126,10 +138,19 @@ builder: This parameter is a callback function that takes two arguments, context
    has completed successfully, or encountered an error.
 */
   Column getrecipesUI() {
+
     return Column(
+
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Widget for displaying recipes goes here
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            greetWidget(),
+
+          ],
+        ),
         Expanded(
       child: FutureBuilder<ERecipe>(
         future: ApiService().getrecipes(),
@@ -176,6 +197,7 @@ builder: This parameter is a callback function that takes two arguments, context
               height: 600,
               child: Column(
                 children: [
+
                   Container(
                     height: 40,
                     width: double.infinity,
@@ -299,3 +321,18 @@ void userLogOut()async
   FirebaseAuth.instance.signOut();
 }
 
+Column greetWidget()
+{
+  return Column(
+    children: [
+      Text('Hi, ${getUsername()}!',style: TextStyle(fontWeight: FontWeight.bold),)
+    ],
+  );
+}
+
+String? getUsername()
+{
+  var username=FirebaseAuth.instance.currentUser?.displayName;
+  return username;
+
+}

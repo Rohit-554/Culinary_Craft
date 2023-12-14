@@ -1,9 +1,11 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/presentation/auth_screens/SignupScreen.dart';
 import 'package:fud/presentation/home_screens/Home.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 import 'package:fud/presentation/uicomponents/ButtonComponent.dart';
 import 'package:fud/presentation/uicomponents/UiComponents.dart';
 
@@ -104,10 +106,8 @@ padding: EdgeInsets.only(top: 0),
              child:
              GestureDetector(
                onTap: () {
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) =>  SignupScreen()),
-                 );
+
+                 context.router.push(SignupRoute());
                },
                 child: const Text(
                   "Sign Up",
