@@ -299,23 +299,24 @@ void userLogOut() async {
 
 Column greetWidget() {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
        Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 20,left: 8),
+            padding: EdgeInsets.only(top: 20,left: 12),
             child: Text(
-              "Hello, ",
+              "Hi,",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
                   color: Colors.black),
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: 20,left: 8),
+          Padding(padding: EdgeInsets.only(top: 20,left: 12),
             child: Text(
-              getUsername() ?? "User",
+              "${getUsername()}!" ?? "User!",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -327,7 +328,16 @@ Column greetWidget() {
         ],
 
       ),
+      Padding(padding: EdgeInsets.only(top: 4,left: 12,bottom: 20),
+        child: Text(
+          "What's on the menu today?",
+          style: TextStyle(
+              fontSize: 14,
 
+              color: greyText),
+        ),
+
+      ),
 
     ],
   );
