@@ -171,9 +171,8 @@ builder: This parameter is a callback function that takes two arguments, context
             child: PageView.builder(
                 itemCount: 5,
                 itemBuilder:(context,index){
-                  return Padding(padding: EdgeInsets.only(top:20 ),
-                  child: Image.network(snapshot.data!.hints[index].food.image!),
-                  );
+                  return popularRecipes(snapshot);
+
                 },
             ),
           ),
@@ -364,4 +363,32 @@ Column greetWidget() {
 String? getUsername() {
   var username = FirebaseAuth.instance.currentUser?.displayName;
   return username;
+}
+
+Container popularRecipes(AsyncSnapshot<ERecipe> snapshot)
+{
+  return Container(
+
+    height: 240,
+    child:  Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 100,
+            child:Image.network(snapshot.data!.hints[0].food.image!) ,
+          ),
+          Container(
+            width: double.infinity,
+            color: Colors.blueAccent,
+            height: 100,
+            child: Text('Food'),
+          )
+        ],
+      ),
+    ),
+  );
 }
