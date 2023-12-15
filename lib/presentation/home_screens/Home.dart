@@ -167,6 +167,7 @@ builder: This parameter is a callback function that takes two arguments, context
             child: greetWidget(),
           ),
           Container(
+            height: 200,
             child: PageView.builder(
                 itemCount: 5,
                 itemBuilder:(context,index){
@@ -174,7 +175,6 @@ builder: This parameter is a callback function that takes two arguments, context
                   child: Image.network(snapshot.data!.hints[index].food.image!),
                   );
                 },
-
             ),
           ),
           ListView.builder(
