@@ -162,14 +162,29 @@ builder: This parameter is a callback function that takes two arguments, context
     return SingleChildScrollView(
       child: Column (
         children: [
-          greetWidget(),
+          Container(
+            color: Colors.white,
+            child: greetWidget(),
+          ),
+          Container(
+            child: PageView.builder(
+                itemCount: 5,
+                itemBuilder:(context,index){
+                  return Padding(padding: EdgeInsets.only(top:20 ),
+                  child: Image.network(snapshot.data!.hints[index].food.image!),
+                  );
+                },
+
+            ),
+          ),
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: snapshot.data!.hints.length,
               itemBuilder: (context, index) {
-                return SizedBox(
+                return Expanded(child:
+                  SizedBox(
                   height: 600,
                   child: Column(
                     children: [
@@ -200,6 +215,7 @@ builder: This parameter is a callback function that takes two arguments, context
                           ],
                         ),
                       ),
+
                       Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(
@@ -285,6 +301,7 @@ builder: This parameter is a callback function that takes two arguments, context
                       ),
                     ],
                   ),
+                ),
                 );
               }),
         ],
@@ -300,6 +317,7 @@ void userLogOut() async {
 Column greetWidget() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+
     children: [
        Row(
         mainAxisAlignment: MainAxisAlignment.start,
