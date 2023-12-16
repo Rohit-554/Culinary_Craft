@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fud/colors/Colors.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget {
@@ -13,8 +14,10 @@ class MyProfilePage extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Adjust the length based on the number of tabs
-      child: Scaffold(
+      length: 2, // Adjust the length based on the number of tabs
+
+      child:
+      Scaffold(
         appBar: AppBar(
           title: const Text(''),
           backgroundColor: Colors.white,
@@ -27,21 +30,21 @@ class MyProfilePage extends State<ProfilePage> {
             ),
           ],
           bottom: TabBar(
+           indicatorColor: fabButton,
             tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(text: 'Favourites'),
+              Tab(text: 'My Recipe'),
+
             ],
+            labelColor: fabButton, // Change the color for selected tab
+            unselectedLabelColor: Colors.grey, // Change the color for unselected tabs
           ),
         ),
         body: TabBarView(
           children: [
-            // Content for the 'Directions Car' tab
-            Icon(Icons.directions_car),
-            // Content for the 'Directions Transit' tab
-            Icon(Icons.directions_transit),
-            // Content for the 'Directions Bike' tab
-            Icon(Icons.directions_bike),
+          favourite(),
+            myRecipe(),
+
           ],
         ),
       ),
@@ -92,4 +95,41 @@ String? getImage() {
 String? getName() {
   var userName = FirebaseAuth.instance.currentUser?.displayName;
   return userName;
+}
+
+Center favourite(){
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(padding: EdgeInsets.only(top: 0),child:  Image.asset(
+          'assets/images/hourglass.png',
+          width: 100,
+          height: 100,
+        ),),
+  Padding(padding: EdgeInsets.only(top: 20),child:
+        Text('No Favourites yet',style: TextStyle(color: CupertinoColors.systemGrey,fontWeight:FontWeight.bold),),),
+      ],
+    ),
+  );
+}
+
+
+Center myRecipe(){
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(padding: EdgeInsets.only(top: 0),child:  Image.asset(
+          'assets/images/hourglass.png',
+          width: 100,
+          height: 100,
+        ),),
+        Padding(padding: EdgeInsets.only(top: 20),child:
+        Text('No Recipes yet',style: TextStyle(color: CupertinoColors.systemGrey,fontWeight:FontWeight.bold),),),
+      ],
+    ),
+  );
 }
