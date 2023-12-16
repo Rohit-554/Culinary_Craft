@@ -1,11 +1,13 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/models/mRecipe/mRecipe.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/eRecipe/ERecipe.dart';
@@ -81,7 +83,7 @@ class MyHomePage extends State<Home> {
                 ),
                 IconButton(
                   onPressed: () {
-                    print("home");
+                    context.router.push(ProfileRoute());
                   },
                   icon: Icon(Icons.person_outline_rounded),
                 ),
