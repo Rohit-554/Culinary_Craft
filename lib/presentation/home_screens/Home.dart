@@ -167,12 +167,11 @@ builder: This parameter is a callback function that takes two arguments, context
             child: greetWidget(),
           ),
           Container(
-            height: 200,
+            height: 240,
             child: PageView.builder(
                 itemCount: 5,
                 itemBuilder:(context,index){
-                  return popularRecipes(snapshot);
-
+                  return popularRecipes(snapshot,index);
                 },
             ),
           ),
@@ -365,30 +364,38 @@ String? getUsername() {
   return username;
 }
 
-Container popularRecipes(AsyncSnapshot<ERecipe> snapshot)
-{
+Container popularRecipes(AsyncSnapshot<ERecipe> snapshot, int index) {
   return Container(
-
     height: 240,
-    child:  Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 100,
-            child:Image.network(snapshot.data!.hints[0].food.image!) ,
-          ),
-          Container(
-            width: double.infinity,
-            color: Colors.blueAccent,
-            height: 100,
-            child: Text('Food'),
-          )
-        ],
+    padding: EdgeInsets.all(12),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
+      child: Card(
+        elevation: 2, // You can adjust the elevation if desired
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 120,
+              child: Image.network(
+                snapshot.data!.hints[index].food.image!,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                color: Colors.white,
+                child: Center(
+                  child: Text('Food'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
 }
+
