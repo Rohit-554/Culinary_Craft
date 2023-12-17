@@ -77,7 +77,7 @@ class MyHomePage extends State<Home> {
               children: [
                 IconButton(
                   onPressed: () {
-                    print("home");
+                    context.router.push(SearchRoute());
                   },
                   icon: Icon(Icons.search_rounded),
                 ),
