@@ -12,7 +12,7 @@ import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:fud/presentation/auth_screens/LoginScreen.dart' as _i1;
 import 'package:fud/presentation/auth_screens/SignupScreen.dart' as _i2;
 import 'package:fud/presentation/home_screens/ProfileScreen.dart' as _i3;
-import 'package:fud/presentation/home_screens/SearchScreen.dart' as _i4;
+import 'package:fud/presentation/search_screen/SearchScreen.dart' as _i4;
 
 abstract class $AppRouter extends _i5.RootStackRouter {
   $AppRouter({super.navigatorKey});

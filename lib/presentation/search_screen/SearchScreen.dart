@@ -5,6 +5,7 @@ import 'package:fud/data/remote/ApiService.dart';
 
 import '../../models/eRecipe/ERecipe.dart';
 import '../../models/eRecipe/Food.dart';
+import 'RecipeWidget.dart';
 @RoutePage()
 class SearchPage extends StatefulWidget {
   @override
@@ -100,3 +101,4 @@ class MySearchPage extends State<SearchPage> {
   {
     return recipe.hints.where((hint) => hint.food.label.toLowerCase().contains(query.toLowerCase())).map((e) => e.food).toList();
   }
+
