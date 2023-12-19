@@ -99,6 +99,8 @@ class MySearchPage extends State<SearchPage> {
 
   List<Food> _filteredRecipes(ERecipe recipe,String query)
   {
-    return recipe.hints.where((hint) => hint.food.label.toLowerCase().contains(query.toLowerCase())).map((e) => e.food).toList();
+    return recipe.hints.where(
+            (hint) => hint.food.label.toLowerCase().contains(query.toLowerCase())).
+    map((e) => e.food).toList();
   }
 
