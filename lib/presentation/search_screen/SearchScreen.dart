@@ -23,21 +23,51 @@ class MySearchPage extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: const Text(''),
-        backgroundColor: Colors.white,
-        scrolledUnderElevation: 0.0,
-        actions: 
-        [
-          IconButton(onPressed: (){
-            showSearch(context: context, delegate: CustomSearchDelegate(_recipeFuture));
-          },
-              icon: Icon(Icons.search_rounded),
 
-          )
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
+        child: SearchAnchor(
+            builder: (BuildContext context, SearchController controller) {
+              return SearchBar(
+                controller: controller,
+                padding: const MaterialStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 16.0)),
+                onTap: () {
+                  controller.openView();
+                },
+                onChanged: (_) {
+                  controller.openView();
+                },
+                leading: const Icon(Icons.search),
+                trailing: <Widget>[
+                  Tooltip(
+                    message: 'Filter',
+                    child: IconButton(
 
-        ),
+                      onPressed: () {
+
+                      },
+                      icon: const Icon(Icons.filter_list_sharp),
+
+                    ),
+                  )
+                ],
+              );
+            }, suggestionsBuilder:
+            (BuildContext context, SearchController controller) {
+          return List<ListTile>.generate(5, (int index) {
+            final String item = 'item $index';
+            return ListTile(
+              title: Text(item),
+              onTap: () {
+                setState(() {
+                  controller.closeView(item);
+                });
+              },
+            );
+          });
+        }),
+      ),
     );
   }
   }
