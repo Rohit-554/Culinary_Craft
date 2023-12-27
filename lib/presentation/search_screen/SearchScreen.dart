@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fud/colors/Colors.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:fud/models/meals/MealDetail.dart';
 import 'package:fud/models/meals/MealType.dart';
@@ -30,41 +31,86 @@ class MySearchPage extends State<SearchPage> {
   Widget build(BuildContext context) {
     String query = '';
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 48, left: 20, right: 20, bottom: 0),
-        child: SearchAnchor(
-            builder: (BuildContext context, SearchController controller) {
-          return SearchBar(
-            controller: controller,
-            padding: const MaterialStatePropertyAll<EdgeInsets>(
-                EdgeInsets.symmetric(horizontal: 16.0)),
-            onTap: () {
-              controller.openView();
-            },
-            onChanged: (value) {
-              setState(() {
-                query = value;
-              });
-              controller.closeView(query);
-              print("query $value");
-            },
-            leading: const Icon(Icons.search),
-            trailing: <Widget>[
-              Tooltip(
-                message: 'Filter',
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.filter_list_sharp),
+      body:
+            Column
+              (children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 48, left: 20, right: 20, bottom: 0),
+                child: SearchAnchor(
+                    builder: (BuildContext context, SearchController controller) {
+                      return SearchBar(
+                        controller: controller,
+                        backgroundColor: MaterialStateProperty.all(bottomNavbarColor),
+                        elevation: MaterialStateProperty.all(2.0),
+                        padding: const MaterialStatePropertyAll<EdgeInsets>(
+                            EdgeInsets.symmetric(horizontal: 16.0)),
+                        onTap: () {
+                          controller.openView();
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            query = value;
+                          });
+                          controller.closeView(query);
+                          print("query $value");
+                        },
+                        leading: const Icon(Icons.search,color: Colors.deepOrange,),
+                        trailing: <Widget>[
+                          Tooltip(
+                            message: 'Filter',
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.filter_list_sharp, color: Colors.deepOrange,),
+                            ),
+                          )
+                        ],
+                      );
+                    }, suggestionsBuilder:
+                    (BuildContext context, SearchController controller) {
+                  return buildRecipeFutureWidget(query);
+                }
                 ),
-              )
+              ),
+              Container(
+                width: double.infinity,
+                child:
+                    Padding(padding: EdgeInsets.only(top:24,left: 32,right: 20,bottom: 0),
+                      child: Text('POPULAR SEARCHES',textAlign:TextAlign.left,style: TextStyle(color: CupertinoColors.systemGrey,fontWeight:FontWeight.bold),) ,
+                    ),
+
+              ),
+              Expanded(
+                child: FutureBuilder<MealType>(
+                  future: ApiService().getrecipes(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Show a loading indicator while fetching data
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      // Handle error state
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (!snapshot.hasData) {
+                      // Handle the case when no data is available
+                      return const Center(
+                        child: Text('No recipe data available.'),
+                      );
+                    } else {
+                      // Data is available, display the recipe content
+                      MealType? recipe = snapshot.data;
+                      log("${snapshot.data}");
+                      return RecipeWidget(snapshot); // working :)
+                      //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
+                    }
+                  },
+                ),
+              ),
             ],
-          );
-        }, suggestionsBuilder:
-                (BuildContext context, SearchController controller) {
-              return buildRecipeFutureWidget(query);
-            }
-        ),
-      ),
+            )
+
     );
   }
 }
