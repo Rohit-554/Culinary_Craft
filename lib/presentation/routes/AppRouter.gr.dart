@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:fud/models/eRecipe/Food.dart' as _i8;
+import 'package:fud/models/meals/MealDetail.dart' as _i9;
 import 'package:fud/presentation/auth_screens/LoginScreen.dart' as _i1;
 import 'package:fud/presentation/auth_screens/SignupScreen.dart' as _i2;
 import 'package:fud/presentation/home_screens/ProfileScreen.dart' as _i3;
@@ -138,7 +139,7 @@ class RecipeDetailRouteArgs {
 /// [_i5.RecipeWidget]
 class RecipeWidget extends _i7.PageRouteInfo<RecipeWidgetArgs> {
   RecipeWidget({
-    required List<_i8.Food> recipes,
+    required List<_i9.MealsDetail> recipes,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           RecipeWidget.name,
@@ -155,7 +156,7 @@ class RecipeWidget extends _i7.PageRouteInfo<RecipeWidgetArgs> {
 class RecipeWidgetArgs {
   const RecipeWidgetArgs({required this.recipes});
 
-  final List<_i8.Food> recipes;
+  final List<_i9.MealsDetail> recipes;
 
   @override
   String toString() {

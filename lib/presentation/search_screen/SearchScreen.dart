@@ -2,10 +2,14 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/data/remote/ApiService.dart';
+import 'package:fud/models/meals/MealDetail.dart';
+import 'package:fud/models/meals/MealType.dart';
+import 'package:fud/models/meals/MealsModel.dart';
 
 import '../../models/eRecipe/ERecipe.dart';
 import '../../models/eRecipe/Food.dart';
 import 'RecipeWidget.dart';
+
 @RoutePage()
 class SearchPage extends StatefulWidget {
   @override
@@ -13,108 +17,121 @@ class SearchPage extends StatefulWidget {
 }
 
 class MySearchPage extends State<SearchPage> {
-  late Future<ERecipe> _recipeFuture;
+  late Future<MealType> _recipeFuture;
+  late Future<MealsModel> _recipeFuture1;
   @override
   void initState() {
-
     super.initState();
-    _recipeFuture=ApiService().getrecipes();
+    _recipeFuture1 = ApiService().getRecipeBySearch('a');
+    // _recipeFuture = ApiService().getRecipeBySearch(searchTerm);
   }
+
   @override
   Widget build(BuildContext context) {
+    String query = '';
     return Scaffold(
-
       body: Padding(
-        padding: const EdgeInsets.only(top: 48,left: 20,right: 20,bottom: 0),
+        padding: const EdgeInsets.only(top: 48, left: 20, right: 20, bottom: 0),
         child: SearchAnchor(
             builder: (BuildContext context, SearchController controller) {
-              return SearchBar(
-                controller: controller,
-                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0)),
-                onTap: () {
-                  controller.openView();
-                },
-                onChanged: (_) {
-                  controller.openView();
-                },
-                leading: const Icon(Icons.search),
-                trailing: <Widget>[
-                  Tooltip(
-                    message: 'Filter',
-                    child: IconButton(
-
-                      onPressed: () {
-
-                      },
-                      icon: const Icon(Icons.filter_list_sharp),
-
-                    ),
-                  )
-                ],
-              );
-            }, suggestionsBuilder:
-            (BuildContext context, SearchController controller) {
-          return List<ListTile>.generate(5, (int index) {
-            final String item = 'item $index';
-            return ListTile(
-              title: Text(item),
-              onTap: () {
-                setState(() {
-                  controller.closeView(item);
-                });
-              },
-            );
-          });
-        }),
+          return SearchBar(
+            controller: controller,
+            padding: const MaterialStatePropertyAll<EdgeInsets>(
+                EdgeInsets.symmetric(horizontal: 16.0)),
+            onTap: () {
+              controller.openView();
+            },
+            onChanged: (value) {
+              setState(() {
+                query = value;
+              });
+              controller.closeView(query);
+              print("query $value");
+            },
+            leading: const Icon(Icons.search),
+            trailing: <Widget>[
+              Tooltip(
+                message: 'Filter',
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.filter_list_sharp),
+                ),
+              )
+            ],
+          );
+        }, suggestionsBuilder:
+                (BuildContext context, SearchController controller) {
+              return buildRecipeFutureWidget(query);
+            }
+        ),
       ),
     );
   }
-  }
+}
 
-  class CustomSearchDelegate extends SearchDelegate
-  {
-    final Future<ERecipe> recipefuture;
-  CustomSearchDelegate( this.recipefuture);//constructor for initialization
+// Widget buildRecipeFutureBuilder(Future<ERecipe> recipeFuture) {
+//   return FutureBuilder<ERecipe>(
+//     future: recipeFuture,
+//     builder: (context, snapshot) {
+//       if (snapshot.connectionState == ConnectionState.waiting) {
+//         return const Center(child: CircularProgressIndicator());
+//       } else if (snapshot.hasError) {
+//         return Center(child: Text('Error: ${snapshot.error}'));
+//       } else if (!snapshot.hasData) {
+//         return Center(child: Text('No recipe data available'));
+//       } else {
+//         // ERecipe? recipe = snapshot.data;
+//         // List<Food> filteredRecipe = _filteredRecipes(recipe!, query);
+//
+//         return RecipeWidget(filteredRecipe);
+//       }
+//     },
+//   );
+// }
 
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [IconButton(onPressed: ()=>query='', icon: Icon(Icons.clear))];
-  }
+// class CustomSearchDelegate extends SearchDelegate {
+//   final Future<ERecipe> recipefuture;
+//
+//   CustomSearchDelegate(this.recipefuture); //constructor for initialization
+//
+//   @override
+//   List<Widget>? buildActions(BuildContext context) {
+//     return [IconButton(onPressed: () => query = '', icon: Icon(Icons.clear))];
+//   }
+//
+//   @override
+//   Widget? buildLeading(BuildContext context) {
+//     return IconButton(
+//         onPressed: () {
+//           close(context, null);
+//         },
+//         icon: Icon(Icons.arrow_back));
+//   }
 
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(onPressed: (){
-      close(context, null);
-    }, icon: Icon(Icons.arrow_back));
-  }
-
-  @override
+/*  @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<ERecipe>(
-        future: recipefuture,
+      future: recipefuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error:${snapshot.error}'),
+          );
+        } else if (!snapshot.hasData) {
+          return Center(
+            child: Text('No recipe data available'),
+          );
+        } else {
+          ERecipe? recipe = snapshot.data;
+          List<Food> filteredrecipe = _filteredRecipes(recipe!, query);
 
-        builder: (context,snapshot)
-        {
-          if(snapshot.connectionState==ConnectionState.waiting)
-            {
-              return const Center(child: CircularProgressIndicator(),);
-            }
-          else if(snapshot.hasError){
-            return Center(child: Text('Error:${snapshot.error}'),);
-          }
-          else if(!snapshot.hasData)
-            {
-              return Center(child: Text('No recipe data available') ,);
-            }
-          else {
-            ERecipe? recipe = snapshot.data;
-            List<Food> filteredrecipe = _filteredRecipes(recipe!, query);
-
-
-            return RecipeWidget(_filteredRecipes(recipe, query));
-          }
-        },
+          return RecipeWidget(_filteredRecipes(recipe, query));
+        }
+      },
     );
   }
 
@@ -124,13 +141,74 @@ class MySearchPage extends State<SearchPage> {
       child: Text('Search Suggestions'),
     );
   }
+}*/
 
-  }
+List<MealsDetail> _filteredRecipes(MealsModel recipe, String query) {
+  return recipe.meals!
+      .where((element) =>
+          element.strMeal!.toLowerCase().contains(query.toLowerCase()))
+      .toList();
+}
 
-  List<Food> _filteredRecipes(ERecipe recipe,String query)
-  {
-    return recipe.hints.where(
-            (hint) => hint.food.label.toLowerCase().contains(query.toLowerCase())).
-    map((e) => e.food).toList();
+// Widget buildRecipeFutureWidget(String query) {
+//   try{
+//     Future<MealsModel> recipeFuture1 = ApiService().getRecipeBySearch(query);
+//     return FutureBuilder<MealsModel>(
+//       future: recipeFuture1,
+//       builder: (context, snapshot) {
+//         print("snapshot ");
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           print("waiting");
+//           return const Center(
+//             child: CircularProgressIndicator(),
+//           );
+//         } else if (snapshot.hasError) {
+//           return Center(
+//             child: Text('Error: ${snapshot.error}'),
+//           );
+//         } else if (!snapshot.hasData) {
+//           return Center(
+//             child: Text('No recipe data available'),
+//           );
+//         } else {
+//           print("itisrunning000");
+//           MealsModel? recipe = snapshot.data;
+//           List<MealsDetail> filteredrecipe = _filteredRecipes(recipe!, query);
+//           print("filteredrecipe ${filteredrecipe}");
+//           return RecipeWidget(filteredrecipe);
+//         }
+//       },
+//     );
+//   }catch(e){
+//     print("error $e");
+//     return Container();
+//   }
+//
+//   print("running ${query}");
+//
+//
+// }
+
+Future<Iterable<Widget>> buildRecipeFutureWidget(String query) async {
+  try {
+    MealsModel recipe = await ApiService().getRecipeBySearch(query);
+    if(recipe.meals==null){
+      return <Widget>[];
+    }else{
+      return recipe.meals!.map((meal) {
+        return ListTile(
+          title: Text(meal.strMeal!),
+          // Add other details as needed
+          onTap: () {
+            // Handle tap on the search result item
+          },
+        );
+      });
+    }
+
+  } catch (e) {
+    print("error $e");
+    return <Widget>[]; // Return an empty list in case of an error
   }
+}
 

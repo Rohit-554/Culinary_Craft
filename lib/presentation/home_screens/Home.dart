@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/models/mRecipe/mRecipe.dart';
+import 'package:fud/models/meals/MealType.dart';
+import 'package:fud/models/meals/MealType.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:fud/presentation/routes/AppRouter.gr.dart';
@@ -26,8 +28,8 @@ class MyHomePage extends State<Home> {
   }
 
   void fetchrecipes() async {
-    ERecipe recipe = await ApiService().getrecipes();
-    print('recipelengthhaiye${recipe.hints.length}');
+    MealType recipe = await ApiService().getrecipes();
+    print('recipelengthhaiye${recipe.meals?.length}');
     // try {
     //   Recipe recipe = await ApiService().getrecipes();
     //   print('recipe$recipe');
@@ -126,7 +128,7 @@ builder: This parameter is a callback function that takes two arguments, context
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: FutureBuilder<ERecipe>(
+          child: FutureBuilder<MealType>(
             future: ApiService().getrecipes(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -146,7 +148,7 @@ builder: This parameter is a callback function that takes two arguments, context
                 );
               } else {
                 // Data is available, display the recipe content
-                ERecipe? recipe = snapshot.data;
+                MealType? recipe = snapshot.data;
                 log("${snapshot.data}");
                 return RecipeWidget(snapshot); // working :)
                 //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
@@ -158,7 +160,7 @@ builder: This parameter is a callback function that takes two arguments, context
     );
   }
 
-  SingleChildScrollView RecipeWidget(AsyncSnapshot<ERecipe> snapshot) {
+  SingleChildScrollView RecipeWidget(AsyncSnapshot<MealType> snapshot) {
     // print('recipelengthhaiye${snapshot.data?.hints.length}');
     //log("total elements"+snapshot.data!.recipes.length.toString());
     return SingleChildScrollView(
@@ -181,7 +183,7 @@ builder: This parameter is a callback function that takes two arguments, context
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              itemCount: snapshot.data!.hints.length,
+              itemCount: snapshot.data!.meals?.length,
               itemBuilder: (context, index) {
                 return Expanded(child:
                   SizedBox(
@@ -226,10 +228,10 @@ builder: This parameter is a callback function that takes two arguments, context
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: snapshot.data != null &&
-                                  snapshot.data!.hints != null &&
-                                  index < snapshot.data!.hints.length
+                                  snapshot.data!.meals != null &&
+                                  index < snapshot.data!.meals!.length
                                   ? Image.network(
-                                snapshot.data!.hints[index].food.image ?? '',
+                                snapshot.data!.meals?[index].strMealThumb ?? '',
                                 // Provide a default value or handle null appropriately
                                 height: 400,
                                 width: double.infinity,
@@ -366,7 +368,7 @@ String? getUsername() {
   return username;
 }
 
-Container popularRecipes(AsyncSnapshot<ERecipe> snapshot, int index) {
+Container popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
   return Container(
     height: 240,
     padding: EdgeInsets.all(12),
@@ -381,7 +383,7 @@ Container popularRecipes(AsyncSnapshot<ERecipe> snapshot, int index) {
               width: double.infinity,
               height: 120,
               child: Image.network(
-                snapshot.data!.hints[index].food.image!,
+                snapshot.data!.meals?[index].strMealThumb ?? '',
                 fit: BoxFit.cover,
               ),
             ),
