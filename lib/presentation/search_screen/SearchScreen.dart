@@ -1,9 +1,12 @@
+
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:fud/models/meals/MealDetail.dart';
+import 'package:fud/models/meals/MealItem.dart';
 import 'package:fud/models/meals/MealType.dart';
 import 'package:fud/models/meals/MealsModel.dart';
 
@@ -101,8 +104,8 @@ class MySearchPage extends State<SearchPage> {
                     } else {
                       // Data is available, display the recipe content
                       MealType? recipe = snapshot.data;
-                      log("${snapshot.data}");
-                      return RecipeWidget(snapshot); // working :)
+
+                      return PopularRecipeWidget(snapshot); // working :)
                       //   return RecipeWidget(recipe as AsyncSnapshot<MRecipe>); // Casting error
                     }
                   },
@@ -258,3 +261,37 @@ Future<Iterable<Widget>> buildRecipeFutureWidget(String query) async {
   }
 }
 
+Widget PopularRecipeWidget(AsyncSnapshot<MealType> snapshot)
+{
+
+  return ListView.builder(
+    itemCount: 5,
+    itemBuilder: (context,index){
+      MealItem? recipe=snapshot.data!.meals![index];
+      return Padding(padding: EdgeInsets.only(top: 8,bottom: 8,left: 4,right: 8),
+
+      child:
+
+
+          ListTile(
+
+           title: Text(recipe.strMeal!),
+           onTap: (){},
+
+           leading: Container(
+             width: 80,
+             height: 100,
+
+             decoration: BoxDecoration(shape: BoxShape.circle,
+               image: DecorationImage(fit: BoxFit.cover,image: NetworkImage(recipe.strMealThumb!)),
+             ),
+
+         ),),
+
+
+      );
+
+    },
+
+  );
+}

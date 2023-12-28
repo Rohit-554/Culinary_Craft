@@ -65,6 +65,7 @@ class MyHomePage extends State<Home> {
       ),
       body: Center(
         child: getrecipesUI(),
+       // child: cuisineUI(),
       ),
       bottomNavigationBar: Container(
         color: Colors.transparent,
@@ -179,6 +180,7 @@ builder: This parameter is a callback function that takes two arguments, context
                 },
             ),
           ),
+          cuisineUI(),
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -403,3 +405,21 @@ Container popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
   );
 }
 
+Column cuisineUI()
+{
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(padding: EdgeInsets.only(top: 20,bottom: 20,left: 20,right: 0),
+          child:  Text('Cuisine',style: TextStyle(color: textOrange),),
+          ),
+          Padding(padding: EdgeInsets.only(top: 20,bottom: 20,left: 0,right: 20),
+          child:Text('Explore More>>',style: TextStyle(color: greyText),),)
+        ],
+      )
+    ],
+  );
+  
+}
