@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/models/mRecipe/mRecipe.dart';
@@ -75,7 +76,8 @@ class MyHomePage extends State<Home> {
           color: bottomNavbarColor,
           child: SizedBox(
             height: 60,
-            child: Row(
+            child:
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -161,155 +163,74 @@ builder: This parameter is a callback function that takes two arguments, context
     );
   }
 
-  SingleChildScrollView RecipeWidget(AsyncSnapshot<MealType> snapshot) {
-    // print('recipelengthhaiye${snapshot.data?.hints.length}');
-    //log("total elements"+snapshot.data!.recipes.length.toString());
-    return SingleChildScrollView(
-      child: Column (
-        children: [
-          Container(
-            color: Colors.white,
-            child: greetWidget(),
-          ),
-          Container(
-            height: 240,
-            child: PageView.builder(
-                itemCount: 5,
-                itemBuilder:(context,index){
-                  return popularRecipes(snapshot,index);
-                },
+  Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: 1,
+      itemBuilder: (context, index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.white,
+              child: greetWidget(),
             ),
-          ),
+            Container(
+              height: 240,
+              child: PageView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return popularRecipes(snapshot, index);
+                },
+              ),
+            ),
           cuisineUI(),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: snapshot.data!.meals?.length,
-              itemBuilder: (context, index) {
-                return Expanded(child:
-                  SizedBox(
-                  height: 600,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          // Vertically center the icon and text
-                          children: [
-                            const Icon(
-                              Icons.account_circle,
-                              // Replace this with the icon you want to use for the profile
-                              size: 24,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(width: 8),
-                            // Add some spacing between the icon and the text
-                            Text(
-                              "hello",
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.black,
+            Container(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return Container(
+
+
+                    margin: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
+                          ),
+                          child: Container(
+
+                            width: 100, // Adjust the width as needed
+                            height: 100, // Adjust the height as needed
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(160), // Same radius as the Card
+                              image: DecorationImage(
+                                image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
 
-                      Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: snapshot.data != null &&
-                                  snapshot.data!.meals != null &&
-                                  index < snapshot.data!.meals!.length
-                                  ? Image.network(
-                                snapshot.data!.meals?[index].strMealThumb ?? '',
-                                // Provide a default value or handle null appropriately
-                                height: 400,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              )
-                                  : Container(), // You can provide a placeholder or an empty container when data is null
-                            ),
 
-                            Positioned(
-                                bottom: 8,
-                                left: 8,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.favorite_border,
-                                      size: 24,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        // Toggle the 'liked' state of the photo
-                                        // snapshot.data!.photos[index].liked =
-                                        //!snapshot.data!.photos[index].liked;
-                                      });
-                                    },
-                                  ),
-                                )),
-
-                            //download section
-                            // Positioned(
-                            //     bottom: 8,
-                            //     right: 8,
-                            //     child: Container(
-                            //       decoration: BoxDecoration(
-                            //         color: Colors.black.withOpacity(0.5),
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //       child: IconButton(
-                            //         icon: isDownloading
-                            //             ? const Icon(
-                            //           Icons.download,
-                            //           color: Colors.white,
-                            //           size: 24,
-                            //         )
-                            //             : const Icon(
-                            //           Icons.downloading,
-                            //           color: Colors.white,
-                            //           size: 24,
-                            //         ),
-                            //         onPressed: () {
-                            //           isDownloading = true;
-                            //           Icons.downloading;
-                            //           String url =
-                            //               snapshot.data!.photos[index].src.original;
-                            //           String fileName =
-                            //           snapshot.data!.photos[index].id.toString();
-                            //           showDialog(
-                            //               context: context,
-                            //               builder: (context) =>
-                            //                   DownloadingDialog(url, fileName));
-                            //         },
-                            //       ),
-                            //     ))
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                );
-              }),
-        ],
-      )
+          ],
+        );
+      },
     );
   }
 }
