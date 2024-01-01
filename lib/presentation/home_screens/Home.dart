@@ -229,7 +229,6 @@ builder: This parameter is a callback function that takes two arguments, context
                               borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
                             ),
                             child: Container(
-
                               width: 100, // Adjust the width as needed
                               height: 100, // Adjust the height as needed
                               decoration: BoxDecoration(
@@ -352,43 +351,48 @@ String? getUsername() {
   return username;
 }
 
-Container popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
-  return Container(
-    height: 240,
-    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Card(
-        elevation: 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                image: DecorationImage(
-                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
-                  fit: BoxFit.cover,
-                ),
+Padding popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
+  return Padding(
+    padding: EdgeInsets.all(8), // Add padding from all sides
+    child: Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          AspectRatio(
+            aspectRatio: 16 / 6,
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              child: Image.network(
+                snapshot.data!.meals?[index].strMealThumb ?? '',
+                fit: BoxFit.cover,
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(12),
-              child: Text(
-                snapshot.data!.meals?[index].strMeal ?? 'Food',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.all(12),
+            child: Text(
+              snapshot.data!.meals?[index].strMeal ?? 'Food',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );
 }
+
+
+
+
 
 
 Column cuisineUI(String text1)
