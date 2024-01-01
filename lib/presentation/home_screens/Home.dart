@@ -164,73 +164,134 @@ builder: This parameter is a callback function that takes two arguments, context
   }
 
   Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 1,
-      itemBuilder: (context, index) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.white,
-              child: greetWidget(),
-            ),
-            Container(
-              height: 240,
-              child: PageView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return popularRecipes(snapshot, index);
-                },
+    int _currentPage = 0;
+    return SingleChildScrollView(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.white,
+                child: greetWidget(),
               ),
-            ),
-          cuisineUI(),
-            Container(
-              height: 300,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return Container(
+              Container(
+                height: 240,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: PageView.builder(
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return popularRecipes(snapshot, index);
+                        },
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        5,
+                        (index) => Indicator(
+                          index: index,
+                          currentIndex: _currentPage,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              cuisineUI(),
+              Container(
+                height: 140,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
+                            ),
+                            child: Container(
 
-
-                    margin: EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
-                          ),
-                          child: Container(
-
-                            width: 100, // Adjust the width as needed
-                            height: 100, // Adjust the height as needed
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(160), // Same radius as the Card
-                              image: DecorationImage(
-                                image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
-                                fit: BoxFit.cover,
+                              width: 100, // Adjust the width as needed
+                              height: 100, // Adjust the height as needed
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(160), // Same radius as the Card
+                                image: DecorationImage(
+                                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+              cuisineUI(),
+              Container(
+                height: 140,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return Container(
 
 
-          ],
-        );
-      },
+                      margin: EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
+                            ),
+                            child: Container(
+
+                              width: 100, // Adjust the width as needed
+                              height: 100, // Adjust the height as needed
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(160), // Same radius as the Card
+                                image: DecorationImage(
+                                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -342,5 +403,27 @@ Column cuisineUI()
       )
     ],
   );
-  
+
 }
+
+class Indicator extends StatelessWidget {
+  final int index;
+  final int currentIndex;
+
+  const Indicator({Key? key, required this.index, required this.currentIndex})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 8,
+      height: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: index == currentIndex ? Colors.deepOrange : Colors.grey,
+      ),
+    );
+  }
+}
+
