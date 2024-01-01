@@ -363,17 +363,24 @@ Padding popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          AspectRatio(
-            aspectRatio: 16 / 6,
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              child: Image.network(
-                snapshot.data!.meals?[index].strMealThumb ?? '',
-                fit: BoxFit.cover,
+          Stack( 
+            children: [
+              
+              AspectRatio(
+                aspectRatio: 16/6,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  child: Image.network(
+                    snapshot.data!.meals?[index].strMealThumb ?? '',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              Positioned(top: 10,right: 10, child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 32,),  ),
+            ],
           ),
-          SizedBox(height: 10),
+
+
           Padding(
             padding: EdgeInsets.all(12),
             child: Text(
