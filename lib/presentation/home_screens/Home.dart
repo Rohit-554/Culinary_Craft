@@ -189,11 +189,11 @@ builder: This parameter is a callback function that takes two arguments, context
                         itemBuilder: (context, index) {
                           return popularRecipes(snapshot, index);
                         },
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
+                        // onPageChanged: (index) {
+                        //   setState(() {
+                        //     _currentPage = index;
+                        //   });
+                        // },
                       ),
                     ),
                     Row(
@@ -209,7 +209,7 @@ builder: This parameter is a callback function that takes two arguments, context
                   ],
                 ),
               ),
-              cuisineUI(),
+              cuisineUI('Cuisine'),
               Container(
                 height: 140,
                 child: ListView.builder(
@@ -247,7 +247,7 @@ builder: This parameter is a callback function that takes two arguments, context
                   },
                 ),
               ),
-              cuisineUI(),
+              cuisineUI('Occasion'),
               Container(
                 height: 140,
                 child: ListView.builder(
@@ -355,28 +355,31 @@ String? getUsername() {
 Container popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
   return Container(
     height: 240,
-    padding: EdgeInsets.all(12),
+    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
+      borderRadius: BorderRadius.circular(20),
       child: Card(
-        elevation: 2, // You can adjust the elevation if desired
-        color: Colors.white,
+        elevation: 5,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              width: double.infinity,
               height: 120,
-              child: Image.network(
-                snapshot.data!.meals?[index].strMealThumb ?? '',
-                fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                image: DecorationImage(
+                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: Colors.white,
-                child: Center(
-                  child: Text('Food'),
+            Container(
+              padding: EdgeInsets.all(12),
+              child: Text(
+                snapshot.data!.meals?[index].strMeal ?? 'Food',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -387,7 +390,8 @@ Container popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
   );
 }
 
-Column cuisineUI()
+
+Column cuisineUI(String text1)
 {
   return Column(
     children: [
@@ -395,10 +399,10 @@ Column cuisineUI()
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(padding: EdgeInsets.only(top: 20,bottom: 20,left: 20,right: 0),
-          child:  Text('Cuisine',style: TextStyle(color: textOrange),),
+          child:  Text(text1,style: TextStyle(color: textOrange,fontWeight: FontWeight.w600),),
           ),
           Padding(padding: EdgeInsets.only(top: 20,bottom: 20,left: 0,right: 20),
-          child:Text('Explore More>>',style: TextStyle(color: greyText),),)
+          child:Text('Explore More >>',style: TextStyle(color: CupertinoColors.systemGrey,fontWeight: FontWeight.w600),),)
         ],
       )
     ],
