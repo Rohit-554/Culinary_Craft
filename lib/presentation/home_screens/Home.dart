@@ -171,12 +171,12 @@ builder: This parameter is a callback function that takes two arguments, context
   Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
     int _currentPage = 0;
     List<String> imagepath=[
-      'assets/images/indian.jpg',
-      'assets/images/american.jpg',
-      'assets/images/chinese.jpg',
-      'assets/images/japanese.jpg',
+      'assets/images/Indian_cuisine.jpg',
+      'assets/images/american_cuisine_2.jpg',
+      'assets/images/chinese_cuisine.jpg',
+      'assets/images/japanese_cuisine.jpg',
       'assets/images/mexican.jpg',
-      'assets/images/thai.jpg',
+      'assets/images/Thai_cuisines.jpg',
     ];
     List<String> cuisineName=[
       'Indian',
@@ -292,8 +292,6 @@ builder: This parameter is a callback function that takes two arguments, context
                   itemCount: 6,
                   itemBuilder: (context, index) {
                     return Container(
-
-
                       margin: EdgeInsets.all(4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,7 +302,6 @@ builder: This parameter is a callback function that takes two arguments, context
                               borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
                             ),
                             child: Container(
-
                               width: 80, // Adjust the width as needed
                               height: 80, // Adjust the height as needed
                               decoration: BoxDecoration(
