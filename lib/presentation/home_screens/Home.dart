@@ -436,7 +436,14 @@ Padding popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
                   ),
                 ),
               ),
-              Positioned(top: 10,right: 10, child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 32,),  ),
+              Positioned(top: 10,right: 10,
+                child: IconButton(icon:Icon(Icons.favorite_outline_sharp),
+                  color: Colors.white,iconSize: 32,
+                  onPressed: (){
+                  Icon(Icons.favorite,color: Colors.red,);
+                  },
+                ),
+              ),
             ],
           ),
 
