@@ -189,10 +189,9 @@ builder: This parameter is a callback function that takes two arguments, context
     List<String> categorypath=[
       'assets/images/breakfast_fud.jpg',
       'assets/images/lunch_fud.jpg',
-      'assets/images/chinese_cuisine.jpg',
-      'assets/images/japanese_cuisine.jpg',
-      'assets/images/mexican.jpg',
-      'assets/images/Thai_cuisines.jpg',
+      'assets/images/snacks.jpg',
+      'assets/images/dinner.jpg',
+      'assets/images/desert.jpg',
     ];
 
     List<String> categoryName=[
