@@ -186,7 +186,23 @@ builder: This parameter is a callback function that takes two arguments, context
       'Mexican',
       'Thai',
     ];
+    List<String> categorypath=[
+      'assets/images/breakfast_fud.jpg',
+      'assets/images/lunch_fud.jpg',
+      'assets/images/chinese_cuisine.jpg',
+      'assets/images/japanese_cuisine.jpg',
+      'assets/images/mexican.jpg',
+      'assets/images/Thai_cuisines.jpg',
+    ];
 
+    List<String> categoryName=[
+      'Breakfast',
+      'Lunch',
+      'Appetizer',
+      'Dinner',
+      'Dessert',
+
+    ];
     return SingleChildScrollView(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -234,7 +250,7 @@ builder: This parameter is a callback function that takes two arguments, context
               cuisineUI('Cuisine'),
               
               Container(
-                height: 140,
+                height: 120,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -284,46 +300,58 @@ builder: This parameter is a callback function that takes two arguments, context
               ),
               cuisineUI('Category'),
               Container(
-                height: 140,
+                height: 120,
+
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
-                  itemCount: 6,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.all(4),
+                      margin: EdgeInsets.only(top: 4,bottom: 8,left: 8,right: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Card(
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
-                            ),
-                            child: Container(
-                              width: 80, // Adjust the width as needed
-                              height: 80, // Adjust the height as needed
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(160), // Same radius as the Card
-                                image: DecorationImage(
-                                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
-                                  fit: BoxFit.cover,
+                          Center(
+                            child:
+                            Column(
+                              children: [
+                                Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
+                                  ),
+                                  child: Container(
+                                    width: 80, // Adjust the width as needed
+                                    height: 80, // Adjust the height as needed
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(160), // Same radius as the Card
+                                      image: DecorationImage(
+                                        image: AssetImage(categorypath[index]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                                Text(categoryName[index],),
+                              ],
+                            )
+
                           ),
+
                         ],
                       ),
                     );
                   },
                 ),
               ),
-
+              Container(height: 20,),
             ],
           );
         },
       ),
+
     );
   }
 }
