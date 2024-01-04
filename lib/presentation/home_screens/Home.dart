@@ -171,12 +171,12 @@ builder: This parameter is a callback function that takes two arguments, context
   Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
     int _currentPage = 0;
     List<String> imagepath=[
-      'assets/images/Indian_Cuisine_fud.jpg',
-      'assets/images/American_Cuisine_fud.jpg',
-      'assets/images/Chinese_Cuisine_fud.jpg',
-      'assets/images/Japanese_Cuisine_fud.jpg',
-      'assets/images/Mexican_Cuisine_fud.jpg',
-      'assets/images/Thai_Cuisine_fud.jpg',
+      'assets/images/indian.jpg',
+      'assets/images/american.jpg',
+      'assets/images/chinese.jpg',
+      'assets/images/japanese.jpg',
+      'assets/images/mexican.jpg',
+      'assets/images/thai.jpg',
     ];
     List<String> cuisineName=[
       'Indian',
