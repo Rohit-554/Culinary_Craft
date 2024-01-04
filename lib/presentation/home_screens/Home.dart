@@ -126,7 +126,12 @@ builder: This parameter is a callback function that takes two arguments, context
   It's where you define how your UI should look based on whether the Future is still loading,
    has completed successfully, or encountered an error.
 */
+  
+  
+  
+  
   Column getrecipesUI() {
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -165,6 +170,23 @@ builder: This parameter is a callback function that takes two arguments, context
 
   Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
     int _currentPage = 0;
+    List<String> imagepath=[
+      'assets/images/Indian_Cuisine_fud.jpg',
+      'assets/images/American_Cuisine_fud.jpg',
+      'assets/images/Chinese_Cuisine_fud.jpg',
+      'assets/images/Japanese_Cuisine_fud.jpg',
+      'assets/images/Mexican_Cuisine_fud.jpg',
+      'assets/images/Thai_Cuisine_fud.jpg',
+    ];
+    List<String> cuisineName=[
+      'Indian',
+      'American',
+      'Chinese',
+      'Japanese',
+      'Mexican',
+      'Thai',
+    ];
+
     return SingleChildScrollView(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -210,6 +232,7 @@ builder: This parameter is a callback function that takes two arguments, context
                 ),
               ),
               cuisineUI('Cuisine'),
+              
               Container(
                 height: 140,
                 child: ListView.builder(
@@ -219,34 +242,47 @@ builder: This parameter is a callback function that takes two arguments, context
                   itemCount: 6,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(top: 4,bottom: 8,left: 8,right: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Card(
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
-                            ),
-                            child: Container(
-                              width: 100, // Adjust the width as needed
-                              height: 100, // Adjust the height as needed
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(160), // Same radius as the Card
-                                image: DecorationImage(
-                                  image: NetworkImage(snapshot.data!.meals?[index].strMealThumb ?? ''),
-                                  fit: BoxFit.cover,
+                          Center(
+                            child:
+                            Column(
+                              children: [
+                                Card(
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(160), // Adjust the radius as needed
+                                  ),
+                                  child: Container(
+                                    width: 80, // Adjust the width as needed
+                                    height: 80, // Adjust the height as needed
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(160), // Same radius as the Card
+
+                                      image: DecorationImage(
+                                        image: AssetImage(imagepath[index]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+
                                 ),
-                              ),
+
+                                Text(cuisineName[index],),
+                              ],
                             ),
                           ),
+
                         ],
                       ),
                     );
+
                   },
                 ),
               ),
-              cuisineUI('Occasion'),
+              cuisineUI('Category'),
               Container(
                 height: 140,
                 child: ListView.builder(
@@ -258,7 +294,7 @@ builder: This parameter is a callback function that takes two arguments, context
                     return Container(
 
 
-                      margin: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -269,8 +305,8 @@ builder: This parameter is a callback function that takes two arguments, context
                             ),
                             child: Container(
 
-                              width: 100, // Adjust the width as needed
-                              height: 100, // Adjust the height as needed
+                              width: 80, // Adjust the width as needed
+                              height: 80, // Adjust the height as needed
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(160), // Same radius as the Card
                                 image: DecorationImage(
