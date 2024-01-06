@@ -10,6 +10,7 @@ import 'package:fud/models/meals/MealType.dart';
 import 'package:fud/models/meals/MealType.dart';
 import 'package:fud/models/recipes/Recipe.dart';
 import 'package:fud/data/remote/ApiService.dart';
+import 'package:fud/presentation/home_screens/RecipeCard.dart';
 import 'package:fud/presentation/routes/AppRouter.gr.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -193,14 +194,12 @@ builder: This parameter is a callback function that takes two arguments, context
       'assets/images/dinner.jpg',
       'assets/images/desert.jpg',
     ];
-
     List<String> categoryName=[
       'Breakfast',
       'Lunch',
       'Appetizer',
       'Dinner',
       'Dessert',
-
     ];
     return SingleChildScrollView(
       child: ListView.builder(
@@ -224,7 +223,7 @@ builder: This parameter is a callback function that takes two arguments, context
                       child: PageView.builder(
                         itemCount: 5,
                         itemBuilder: (context, index) {
-                          return popularRecipes(snapshot, index);
+                          return MyRecipeCard(snapshot: snapshot, index: index);
                         },
                         // onPageChanged: (index) {
                         //   setState(() {
@@ -412,6 +411,7 @@ String? getUsername() {
 }
 
 Padding popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
+  bool isFavorite = false;
   return Padding(
     padding: EdgeInsets.all(8), // Add padding from all sides
     child: Card(
@@ -436,7 +436,8 @@ Padding popularRecipes(AsyncSnapshot<MealType> snapshot, int index) {
                   ),
                 ),
               ),
-              Positioned(top: 10,right: 10,
+              Positioned(
+                top: 10,right: 10,
                 child: IconButton(icon:Icon(Icons.favorite_outline_sharp),
                   color: Colors.white,iconSize: 32,
                   onPressed: (){
