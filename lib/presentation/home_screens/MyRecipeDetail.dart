@@ -4,15 +4,19 @@ import 'package:flutter/cupertino.dart';
 import '../../models/meals/MealType.dart';
 
 @RoutePage()
-class RecipeDetailScreen extends StatefulWidget {
+class MyRecipeDetail extends StatefulWidget {
+  final AsyncSnapshot<MealType> snapshot;
+  final int index;
+
+  MyRecipeDetail({required this.snapshot, required this.index});
+
   @override
   _MyRecipeDetailState createState() => _MyRecipeDetailState();
 }
 
-class _MyRecipeDetailState extends State<RecipeDetailScreen> {
-  @override
+class _MyRecipeDetailState extends State<MyRecipeDetail> {  @override
   Widget build(BuildContext context) {
-    return
-      Container();
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

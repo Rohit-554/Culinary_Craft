@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -60,7 +62,7 @@ class _MyRecipeCardState extends State<MyRecipeCard>
       child:
       GestureDetector(
         onTap: (){
-
+           context.pushRoute(MyRecipeDetail(snapshot: widget.snapshot,index: widget.index,));
         },
         child: Card(
         elevation: 5,
