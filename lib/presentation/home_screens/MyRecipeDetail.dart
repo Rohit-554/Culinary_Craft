@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -16,7 +17,47 @@ class MyRecipeDetail extends StatefulWidget {
 
 class _MyRecipeDetailState extends State<MyRecipeDetail> {  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+  return Scaffold(
+  appBar: AppBar(
+    title: const Text(''),
+    backgroundColor: Colors.white,
+    scrolledUnderElevation: 0.0,
+    automaticallyImplyLeading: true,
+    actions: [
+      IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.favorite_outline_sharp),
+      ),
+    ],
+
+
+    ),
+    body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Expanded(
+            child:
+                  Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Image.network(
+                          widget.snapshot.data!.meals![widget.index].strMealThumb!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ],
+      ),
+    ),
+
+
+
+
+  );
   }
 }
