@@ -15,7 +15,8 @@ import 'package:fud/presentation/routes/AppRouter.gr.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/eRecipe/ERecipe.dart';
-@RoutePage()
+
+
 class Home extends StatefulWidget {
   @override
   MyHomePage createState() => MyHomePage();

@@ -8,68 +8,55 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/cupertino.dart' as _i10;
-import 'package:fud/models/meals/MealDetail.dart' as _i9;
-import 'package:fud/models/meals/MealType.dart' as _i11;
+import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:fud/models/meals/MealDetail.dart' as _i8;
 import 'package:fud/presentation/auth_screens/LoginScreen.dart' as _i1;
 import 'package:fud/presentation/auth_screens/SignupScreen.dart' as _i2;
-import 'package:fud/presentation/home_screens/Home.dart' as _i3;
-import 'package:fud/presentation/home_screens/ProfileScreen.dart' as _i4;
-import 'package:fud/presentation/home_screens/RecipeDetailScreen.dart' as _i7;
-import 'package:fud/presentation/search_screen/RecipeWidget.dart' as _i5;
-import 'package:fud/presentation/search_screen/SearchScreen.dart' as _i6;
+import 'package:fud/presentation/home_screens/MyRecipeDetail.dart' as _i6;
+import 'package:fud/presentation/home_screens/ProfileScreen.dart' as _i3;
+import 'package:fud/presentation/search_screen/RecipeWidget.dart' as _i4;
+import 'package:fud/presentation/search_screen/SearchScreen.dart' as _i5;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
+abstract class $AppRouter extends _i7.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i7.PageFactory> pagesMap = {
     LoginRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.LoginScreen(),
       );
     },
     SignupRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.SignupScreen(),
       );
     },
-    Home.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i3.Home(),
-      );
-    },
     ProfileRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.ProfilePage(),
+        child: _i3.ProfilePage(),
       );
     },
     RecipeWidget.name: (routeData) {
       final args = routeData.argsAs<RecipeWidgetArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.RecipeWidget(args.recipes),
+        child: _i4.RecipeWidget(args.recipes),
       );
     },
     SearchRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.SearchPage(),
+        child: _i5.SearchPage(),
       );
     },
-    MyRecipeDetail.name: (routeData) {
-      final args = routeData.argsAs<MyRecipeDetailArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+    RecipeDetailRoute.name: (routeData) {
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.MyRecipeDetail(
-          snapshot: args.snapshot,
-          index: args.index,
-        ),
+        child: _i6.RecipeDetailScreen(),
       );
     },
   };
@@ -77,8 +64,8 @@ abstract class $AppRouter extends _i8.RootStackRouter {
 
 /// generated route for
 /// [_i1.LoginScreen]
-class LoginRoute extends _i8.PageRouteInfo<void> {
-  const LoginRoute({List<_i8.PageRouteInfo>? children})
+class LoginRoute extends _i7.PageRouteInfo<void> {
+  const LoginRoute({List<_i7.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -86,13 +73,13 @@ class LoginRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.SignupScreen]
-class SignupRoute extends _i8.PageRouteInfo<void> {
-  const SignupRoute({List<_i8.PageRouteInfo>? children})
+class SignupRoute extends _i7.PageRouteInfo<void> {
+  const SignupRoute({List<_i7.PageRouteInfo>? children})
       : super(
           SignupRoute.name,
           initialChildren: children,
@@ -100,27 +87,13 @@ class SignupRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'SignupRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.Home]
-class Home extends _i8.PageRouteInfo<void> {
-  const Home({List<_i8.PageRouteInfo>? children})
-      : super(
-          Home.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'Home';
-
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i4.ProfilePage]
-class ProfileRoute extends _i8.PageRouteInfo<void> {
-  const ProfileRoute({List<_i8.PageRouteInfo>? children})
+/// [_i3.ProfilePage]
+class ProfileRoute extends _i7.PageRouteInfo<void> {
+  const ProfileRoute({List<_i7.PageRouteInfo>? children})
       : super(
           ProfileRoute.name,
           initialChildren: children,
@@ -128,15 +101,15 @@ class ProfileRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.RecipeWidget]
-class RecipeWidget extends _i8.PageRouteInfo<RecipeWidgetArgs> {
+/// [_i4.RecipeWidget]
+class RecipeWidget extends _i7.PageRouteInfo<RecipeWidgetArgs> {
   RecipeWidget({
-    required List<_i9.MealsDetail> recipes,
-    List<_i8.PageRouteInfo>? children,
+    required List<_i8.MealsDetail> recipes,
+    List<_i7.PageRouteInfo>? children,
   }) : super(
           RecipeWidget.name,
           args: RecipeWidgetArgs(recipes: recipes),
@@ -145,14 +118,14 @@ class RecipeWidget extends _i8.PageRouteInfo<RecipeWidgetArgs> {
 
   static const String name = 'RecipeWidget';
 
-  static const _i8.PageInfo<RecipeWidgetArgs> page =
-      _i8.PageInfo<RecipeWidgetArgs>(name);
+  static const _i7.PageInfo<RecipeWidgetArgs> page =
+      _i7.PageInfo<RecipeWidgetArgs>(name);
 }
 
 class RecipeWidgetArgs {
   const RecipeWidgetArgs({required this.recipes});
 
-  final List<_i9.MealsDetail> recipes;
+  final List<_i8.MealsDetail> recipes;
 
   @override
   String toString() {
@@ -161,9 +134,9 @@ class RecipeWidgetArgs {
 }
 
 /// generated route for
-/// [_i6.SearchPage]
-class SearchRoute extends _i8.PageRouteInfo<void> {
-  const SearchRoute({List<_i8.PageRouteInfo>? children})
+/// [_i5.SearchPage]
+class SearchRoute extends _i7.PageRouteInfo<void> {
+  const SearchRoute({List<_i7.PageRouteInfo>? children})
       : super(
           SearchRoute.name,
           initialChildren: children,
@@ -171,43 +144,19 @@ class SearchRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'SearchRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.MyRecipeDetail]
-class MyRecipeDetail extends _i8.PageRouteInfo<MyRecipeDetailArgs> {
-  MyRecipeDetail({
-    required _i10.AsyncSnapshot<_i11.MealType> snapshot,
-    required int index,
-    List<_i8.PageRouteInfo>? children,
-  }) : super(
-          MyRecipeDetail.name,
-          args: MyRecipeDetailArgs(
-            snapshot: snapshot,
-            index: index,
-          ),
+/// [_i6.RecipeDetailScreen]
+class RecipeDetailRoute extends _i7.PageRouteInfo<void> {
+  const RecipeDetailRoute({List<_i7.PageRouteInfo>? children})
+      : super(
+          RecipeDetailRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MyRecipeDetail';
+  static const String name = 'RecipeDetailRoute';
 
-  static const _i8.PageInfo<MyRecipeDetailArgs> page =
-      _i8.PageInfo<MyRecipeDetailArgs>(name);
-}
-
-class MyRecipeDetailArgs {
-  const MyRecipeDetailArgs({
-    required this.snapshot,
-    required this.index,
-  });
-
-  final _i10.AsyncSnapshot<_i11.MealType> snapshot;
-
-  final int index;
-
-  @override
-  String toString() {
-    return 'MyRecipeDetailArgs{snapshot: $snapshot, index: $index}';
-  }
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
