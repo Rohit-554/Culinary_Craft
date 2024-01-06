@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/meals/MealType.dart';
@@ -55,7 +56,13 @@ class _MyRecipeCardState extends State<MyRecipeCard>
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8),
-      child: Card(
+
+      child:
+      GestureDetector(
+        onTap: (){
+
+        },
+        child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -70,7 +77,7 @@ class _MyRecipeCardState extends State<MyRecipeCard>
                   aspectRatio: 16 / 6,
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20)),
+                    BorderRadius.vertical(top: Radius.circular(20)),
                     child: Image.network(
                       widget.snapshot.data!.meals?[widget.index].strMealThumb ??
                           '',
@@ -144,7 +151,8 @@ class _MyRecipeCardState extends State<MyRecipeCard>
             ),
           ],
         ),
-      ),
+      ),),
+
     );
   }
 }
