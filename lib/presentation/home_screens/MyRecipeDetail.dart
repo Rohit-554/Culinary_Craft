@@ -15,49 +15,40 @@ class MyRecipeDetail extends StatefulWidget {
   _MyRecipeDetailState createState() => _MyRecipeDetailState();
 }
 
-class _MyRecipeDetailState extends State<MyRecipeDetail> {
-  @override
+class _MyRecipeDetailState extends State<MyRecipeDetail> {  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              expandedHeight: 300,
-              floating: false,
-              pinned: true,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Column(
+  return Scaffold(
+  appBar: AppBar(
+    title: const Text(''),
+    backgroundColor: Colors.white,
+    scrolledUnderElevation: 0.0,
+    automaticallyImplyLeading: true,
+    actions: [
+      IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.favorite_outline_sharp),
+      ),
+    ],
+
+
+    ),
+    body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Expanded(
+            child:
+                  Column(
                     children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            AspectRatio(
-                              aspectRatio: 16 / 9,
-                              child: Image.network(
-                                widget.snapshot.data!.meals![widget.index].strMealThumb!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Card(
-                              margin: EdgeInsets.symmetric(horizontal: 16.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Your Card Content Here',
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ),
-                            ),
-                          ],
+                      AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Image.network(
+                          widget.snapshot.data!.meals![widget.index].strMealThumb!,
+                          fit: BoxFit.cover,
                         ),
                       ),
+
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius:BorderRadius.circular(20),
@@ -72,17 +63,36 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
                         ),
 
                       ),
+
+                      Expanded(
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            color: Colors.black,
+                            child: Expanded(
+                              child: ListView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+
+                                ],
+                              ),
+                            ),
+                          )
+                      ),
+
+
                     ],
                   ),
-                ),
-              ),
-            ),
-          ];
-        },
-        body: ListView(
-          children: List.generate(50, (index) => ListTile(title: Text('Item $index'))),
-        ), // Replace with your actual body content
+          ),
+        ],
       ),
-    );
+    ),
+
+
+
+
+  );
   }
 }
