@@ -48,6 +48,20 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {  @override
                           fit: BoxFit.cover,
                         ),
                       ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:BorderRadius.circular(20),
+                        ),
+                        color: Colors.black,
+
+                        child: Expanded(
+                          child:  Container(
+
+
+                          ),
+                        ),
+
+                      ),
                     ],
                   ),
           ),
