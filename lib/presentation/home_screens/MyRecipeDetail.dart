@@ -65,7 +65,9 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
             ),
           ];
         },
-        body: Column(), // Replace with your actual body content
+        body: ListView(
+          children: List.generate(50, (index) => ListTile(title: Text('Item $index'))),
+        ), // Replace with your actual body content
       ),
     );
   }
