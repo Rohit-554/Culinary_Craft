@@ -130,7 +130,7 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStat
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: TabBarView(
                           controller: _tabController,
-                          children: [
+                          children: const [
                             Center(
                               child:
                                 Text(
