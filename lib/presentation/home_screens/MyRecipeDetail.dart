@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fud/colors/Colors.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -16,9 +17,10 @@ class MyRecipeDetail extends StatefulWidget {
   _MyRecipeDetailState createState() => _MyRecipeDetailState();
 }
 
-class _MyRecipeDetailState extends State<MyRecipeDetail> {
+class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   bool isExpanded = true;
+
   @override
   void initState() {
     super.initState();
@@ -30,9 +32,10 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
     _scrollController.dispose();
     super.dispose();
   }
+
   void _onScroll() {
-  bool isExpanded = _scrollController.hasClients &&
-  _scrollController.offset > (400 - kToolbarHeight);
+    bool isExpanded = _scrollController.hasClients &&
+        _scrollController.offset > (400 - kToolbarHeight);
     setState(() {
       this.isExpanded = isExpanded;
     });
@@ -40,62 +43,13 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
 
   @override
   Widget build(BuildContext context) {
+    TabController _tabController = TabController(length: 2, vsync: this);
     return Scaffold(
-      /*appBar: AppBar(
-        title: const Text(''),
-        backgroundColor: Colors.white,
-        scrolledUnderElevation: 0.0,
-        automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.favorite_outline_sharp),
-          ),
-        ],
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Image.network(
-                      widget.snapshot.data!.meals![widget.index].strMealThumb!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Expanded(
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      color: Colors.black,
-                      child: Expanded(
-                        child: ListView(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [
-                            // Your ListView items go here
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),*/
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
           SliverAppBar(
-            expandedHeight: 400,
+            expandedHeight: MediaQuery.of(context).size.height * 0.4,
             pinned: true,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -115,41 +69,93 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
               statusBarIconBrightness: Brightness.dark,
             ),
             stretch: true,
-            backgroundColor: Colors.blue,
+            backgroundColor: bottomNavbarColor,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                widget.snapshot.data!.meals![widget.index].strMeal!,
-                style: TextStyle(
-                  color: isExpanded ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               collapseMode: CollapseMode.pin,
               centerTitle: false,
               expandedTitleScale: 1,
-              background: Image.network(
-                widget.snapshot.data!.meals![widget.index].strMealThumb!,
-                fit: BoxFit.cover,
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.network(
+                    widget.snapshot.data!.meals![widget.index].strMealThumb!,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 100, // Adjust the height as needed
+                      decoration: const BoxDecoration(
+                        color: Colors.white, // Adjust the card background color
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          widget.snapshot.data!.meals![widget.index].strMeal!,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  height: 1000,
                   color: Colors.white,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.snapshot.data!.meals![widget.index].strMeal!,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                        Container(
+                          child: TabBar(
+                            controller: _tabController,
+                            indicatorColor: fabButton,
+                            tabs: [
+                              Tab(text: 'Ingredients'),
+                              Tab(text: 'Instructions'),
+                            ],
+                            labelColor: fabButton, // Change the color for selected tab
+                            unselectedLabelColor: Colors.grey, // Change the color for unselected tabs
+                          ),
                         ),
-                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            Center(
+                              child:
+                                Text(
+                                  "Hello",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic
+                                  ),
+                                ),
+                            ),
+                            Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  Text("Saumya", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
+                                ],
+
+                            )
+
+
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -161,4 +167,3 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> {
     );
   }
 }
-
