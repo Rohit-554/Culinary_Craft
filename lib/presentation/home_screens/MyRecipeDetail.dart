@@ -1,8 +1,12 @@
+
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fud/colors/Colors.dart';
+import 'package:fud/data/remote/ApiService.dart';
+import 'package:fud/models/meals/MealsModel.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -16,7 +20,8 @@ class MyRecipeDetail extends StatefulWidget {
   _MyRecipeDetailState createState() => _MyRecipeDetailState();
 }
 
-class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStateMixin {
+class _MyRecipeDetailState extends State<MyRecipeDetail>
+    with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   bool isExpanded = true;
 
@@ -51,7 +56,10 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStat
             expandedHeight: MediaQuery.of(context).size.height * 0.4,
             pinned: true,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: Icon(
+                Icons.arrow_back,
+                size: 32,
+              ),
               color: Colors.white,
               onPressed: () {
                 Navigator.pop(context);
@@ -60,7 +68,11 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStat
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.favorite_outline_sharp),
+                icon: Icon(
+                  Icons.favorite_outline_sharp,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
             ],
             systemOverlayStyle: const SystemUiOverlayStyle(
@@ -113,45 +125,48 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStat
                   color: Colors.white,
                   child: Column(
                     children: [
-                        Container(
-                          child: TabBar(
-                            controller: _tabController,
-                            indicatorColor: fabButton,
-                            tabs: [
-                              Tab(text: 'Ingredients'),
-                              Tab(text: 'Instructions'),
-                            ],
-                            labelColor: fabButton, // Change the color for selected tab
-                            unselectedLabelColor: Colors.grey, // Change the color for unselected tabs
-                          ),
+                      getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
+                      Container(
+                        child: TabBar(
+                          controller: _tabController,
+                          indicatorColor: fabButton,
+                          tabs: [
+                            Tab(text: 'Ingredients'),
+                            Tab(text: 'Instructions'),
+                          ],
+                          labelColor: fabButton,
+                          // Change the color for selected tab
+                          unselectedLabelColor: Colors
+                              .grey, // Change the color for unselected tabs
                         ),
+                      ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: TabBarView(
                           controller: _tabController,
                           children: const [
                             Center(
-                              child:
-                                Text(
-                                  "Hello",
-                                  style: TextStyle(
+                              child: Text(
+                                "Hello",
+                                style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic
-                                  ),
-                                ),
+                                    fontStyle: FontStyle.italic),
+                              ),
                             ),
                             Center(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                  Text("Saumya", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
-                                ],
-
-                            )
-
-
-                            )
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Saumya",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            ))
                           ],
                         ),
                       )
@@ -165,4 +180,38 @@ class _MyRecipeDetailState extends State<MyRecipeDetail> with TickerProviderStat
       ),
     );
   }
+}
+
+Widget getrecipedetails(String id) {
+  return Column(
+    children: [
+      Expanded(
+        child: FutureBuilder<MealsModel>(
+          future: ApiService().getrecipebyid(id),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState==ConnectionState.waiting)
+              {
+                return const Center(child: CircularProgressIndicator(),);
+              }
+            else if(snapshot.hasError)
+              {
+                print(snapshot.hasError);
+                return Center(child:Text('Error in fetching data'));
+              }
+            else if(snapshot.hasData==false)
+              {
+                return Center(child:Text('No data'));
+              }
+            else
+              {
+                MealsModel? recipedetails=snapshot.data;
+                print('recipe details$recipedetails');
+                  return Container();
+              }
+
+          },
+        ),
+      ),
+    ],
+  );
 }

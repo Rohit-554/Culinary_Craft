@@ -15,15 +15,17 @@ import '../../models/eRecipe/ERecipe.dart';
   example:nitdgp.org/departments/cse/sectionX/Saumya
   HTTP,Dio search
   */
-class ApiService{
+class ApiService {
   // static const String baseurl='MealsDetail';
   // static const String endpoint='/api/food-database/v2/parser';
   static const String baseurl = 'https://www.themealdb.com';
   static const String endpoint = '/api/json/v1/1/filter.php';
   static const String endpoint1 = '/api/json/v1/1/search.php';
-  static  String? xrapidapikey=dotenv.env['X-RapidAPI-Key'];
-  static String? apikey=dotenv.env['apiKey'];
+  static const String endpointbyid='api/json/v1/1/lookup.php';
+  static String? xrapidapikey = dotenv.env['X-RapidAPI-Key'];
+  static String? apikey = dotenv.env['apiKey'];
   late final Dio dio;
+
   /*Future is a return type of type Recipe and getrecipes is the name of the function,
   async is used for synchronization, together this whole line defines a function
   async ensures not to return data until full processing of getting data completes,
@@ -60,7 +62,7 @@ class ApiService{
   // }
 
 /*  // for meals according to the first letter
-  *//*Future<MealsModel> getrecipes() async {
+  */ /*Future<MealsModel> getrecipes() async {
     try {
       dio = Dio();
 
@@ -81,7 +83,8 @@ class ApiService{
     try {
       dio = Dio();
 
-      final Response response = await dio.get('$baseurl$endpoint1', queryParameters: {
+      final Response response = await dio.get(
+          '$baseurl$endpoint1', queryParameters: {
         's': searchTerm, // Use 's' parameter for search term
       });
       print("responsesearch ${response.data}");
@@ -97,7 +100,8 @@ class ApiService{
   Future<MealType> getrecipes() async {
     try {
       dio = Dio();
-      final Response response = await dio.get('$baseurl$endpoint', queryParameters: {
+      final Response response = await dio.get(
+          '$baseurl$endpoint', queryParameters: {
         'c': 'seafood', // Add any other parameters as needed
       });
       print("response${response.data}");
@@ -109,5 +113,19 @@ class ApiService{
     }
   }
 
-
+  Future<MealsModel> getrecipebyid(String id) async {
+    try {
+      dio = Dio();
+      final Response response = await dio.get(
+          '$baseurl$endpointbyid', queryParameters: {
+        'i': id, // Add any other parameters as needed
+      });
+      print("response${response.data}");
+      MealsModel recipes = MealsModel.fromJson(response.data);
+      return recipes;
+    } on DioException catch (e) {
+      print("error$e");
+      rethrow;
+    }
+  }
 }
