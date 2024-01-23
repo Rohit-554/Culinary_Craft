@@ -1,5 +1,3 @@
-
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ import '../../models/meals/MealType.dart';
 class MyRecipeDetail extends StatefulWidget {
   final AsyncSnapshot<MealType> snapshot;
   final int index;
+
   MyRecipeDetail({required this.snapshot, required this.index});
 
   @override
@@ -125,7 +124,6 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
                   color: Colors.white,
                   child: Column(
                     children: [
-                     getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
 
                       Container(
                         child: TabBar(
@@ -145,15 +143,9 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: TabBarView(
                           controller: _tabController,
-                          children: const [
+                          children:  [
                             Center(
-                              child: Text(
-                                "Hello",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic),
-                              ),
+                              child: getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
                             ),
                             Center(
                                 child: Column(
@@ -186,77 +178,104 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
 Widget getrecipedetails(String id) {
   return Column(
     children: [
+      FutureBuilder<MealsModel>(
+        future: ApiService().getrecipebyid(id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            print('${snapshot.hasError}');
 
-        FutureBuilder<MealsModel>(
-          future: ApiService().getrecipebyid(id),
-          builder: (context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting)
-              {
-
-                return const Center(child: CircularProgressIndicator(),);
-              }
-            else if(snapshot.hasError)
-              {
-                print('${snapshot.hasError}');
-
-                return Center(child:Text('Error in fetching data'));
-              }
-            else if(snapshot.hasData==false)
-              {
-                return Center(child:Text('No data'));
-              }
-            else
-              {
-                MealsModel? recipedetails=snapshot.data;
-                print('recipe details$recipedetails');
-                if(recipedetails!=null)
-                  {return Ingredients(recipedetails);}
-                else
-                  {
-                    return Container();
-                  }
-              }
-
-          },
-        ),
-
+            return Center(child: Text('Error in fetching data'));
+          } else if (snapshot.hasData == false) {
+            return Center(child: Text('No data'));
+          } else {
+            MealsModel? recipedetails = snapshot.data;
+            print('recipe details$recipedetails');
+            if (recipedetails != null) {
+              return Ingredients(recipedetails);
+            } else {
+              return Container();
+            }
+          }
+        },
+      ),
     ],
   );
 }
 
-Widget Ingredients(MealsModel recipedetails)
-{
-  Map<String,String>IngredientMeasures= {
-    recipedetails.meals![0].strIngredient1!: recipedetails.meals![0]
-        .strMeasure1!,
-    recipedetails.meals![0].strIngredient2!: recipedetails.meals![0]
-        .strMeasure2!,
-    recipedetails.meals![0].strIngredient3!:recipedetails.meals![0].strMeasure3!,
-    recipedetails.meals![0].strIngredient4!:recipedetails.meals![0].strMeasure4!,
-    recipedetails.meals![0].strIngredient5!:recipedetails.meals![0].strMeasure5!,
-    recipedetails.meals![0].strIngredient6!:recipedetails.meals![0].strMeasure6!,
-    recipedetails.meals![0].strIngredient7!:recipedetails.meals![0].strMeasure7!,
-    recipedetails.meals![0].strIngredient8!:recipedetails.meals![0].strMeasure8!,
-    recipedetails.meals![0].strIngredient9!:recipedetails.meals![0].strMeasure9!,
-    recipedetails.meals![0].strIngredient10!:recipedetails.meals![0].strMeasure10!,
-    recipedetails.meals![0].strIngredient11!:recipedetails.meals![0].strMeasure11!,
-    recipedetails.meals![0].strIngredient12!:recipedetails.meals![0].strMeasure12!,
-    recipedetails.meals![0].strIngredient13!:recipedetails.meals![0].strMeasure13!,
-    recipedetails.meals![0].strIngredient14!:recipedetails.meals![0].strMeasure14!,
-    recipedetails.meals![0].strIngredient15!:recipedetails.meals![0].strMeasure15!,
-    recipedetails.meals![0].strIngredient16!:recipedetails.meals![0].strMeasure16!,
-    recipedetails.meals![0].strIngredient17!:recipedetails.meals![0].strMeasure17!,
-    recipedetails.meals![0].strIngredient18!:recipedetails.meals![0].strMeasure18!,
-    recipedetails.meals![0].strIngredient19!:recipedetails.meals![0].strMeasure19!,
-    recipedetails.meals![0].strIngredient20!:recipedetails.meals![0].strMeasure20!,
+Widget Ingredients(MealsModel recipedetails) {
+  Map<String, String> IngredientMeasures = {
+    recipedetails.meals![0].strIngredient1!:
+        recipedetails.meals![0].strMeasure1!,
+    recipedetails.meals![0].strIngredient2!:
+        recipedetails.meals![0].strMeasure2!,
+    recipedetails.meals![0].strIngredient3!:
+        recipedetails.meals![0].strMeasure3!,
+    recipedetails.meals![0].strIngredient4!:
+        recipedetails.meals![0].strMeasure4!,
+    recipedetails.meals![0].strIngredient5!:
+        recipedetails.meals![0].strMeasure5!,
+    recipedetails.meals![0].strIngredient6!:
+        recipedetails.meals![0].strMeasure6!,
+    recipedetails.meals![0].strIngredient7!:
+        recipedetails.meals![0].strMeasure7!,
+    recipedetails.meals![0].strIngredient8!:
+        recipedetails.meals![0].strMeasure8!,
+    recipedetails.meals![0].strIngredient9!:
+        recipedetails.meals![0].strMeasure9!,
+    recipedetails.meals![0].strIngredient10!:
+        recipedetails.meals![0].strMeasure10!,
+    recipedetails.meals![0].strIngredient11!:
+        recipedetails.meals![0].strMeasure11!,
+    recipedetails.meals![0].strIngredient12!:
+        recipedetails.meals![0].strMeasure12!,
+    recipedetails.meals![0].strIngredient13!:
+        recipedetails.meals![0].strMeasure13!,
+    recipedetails.meals![0].strIngredient14!:
+        recipedetails.meals![0].strMeasure14!,
+    recipedetails.meals![0].strIngredient15!:
+        recipedetails.meals![0].strMeasure15!,
+    recipedetails.meals![0].strIngredient16!:
+        recipedetails.meals![0].strMeasure16!,
+    recipedetails.meals![0].strIngredient17!:
+        recipedetails.meals![0].strMeasure17!,
+    recipedetails.meals![0].strIngredient18!:
+        recipedetails.meals![0].strMeasure18!,
+    recipedetails.meals![0].strIngredient19!:
+        recipedetails.meals![0].strMeasure19!,
+    recipedetails.meals![0].strIngredient20!:
+        recipedetails.meals![0].strMeasure20!,
   };
 
-  return Container(
-   child: Column(
-     children: [
-      IngredientMeasures.entries.where((element) => element.key.isNotEmpty && element.value.isNotEmpty)
-      .map((e) => {return Text('${e.key}:${e.value}')}.toList());
-     ],
-   ),
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: IngredientMeasures.entries
+          .where((element) => element.key.isNotEmpty && element.value.isNotEmpty)
+          .map((e) => Column(
+        children: [
+          ListTile(
+            title: Text(
+              '${e.key}: ${e.value}',
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.grey[300],
+            height: 1.0,
+          ),
+        ],
+      ))
+          .toList(),
+    ),
   );
+
+
+
 }
