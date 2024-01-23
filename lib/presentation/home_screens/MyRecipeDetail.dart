@@ -126,7 +126,8 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
                   color: Colors.white,
                   child: Column(
                     children: [
-                      getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
+                     getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
+
                       Container(
                         child: TabBar(
                           controller: _tabController,
@@ -186,17 +187,19 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
 Widget getrecipedetails(String id) {
   return Column(
     children: [
-      Expanded(
-        child: FutureBuilder<MealsModel>(
+
+        FutureBuilder<MealsModel>(
           future: ApiService().getrecipebyid(id),
           builder: (context, snapshot) {
             if(snapshot.connectionState==ConnectionState.waiting)
               {
+
                 return const Center(child: CircularProgressIndicator(),);
               }
             else if(snapshot.hasError)
               {
-                print(snapshot.hasError);
+                print('${snapshot.hasError}');
+
                 return Center(child:Text('Error in fetching data'));
               }
             else if(snapshot.hasData==false)
@@ -207,12 +210,54 @@ Widget getrecipedetails(String id) {
               {
                 MealsModel? recipedetails=snapshot.data;
                 print('recipe details$recipedetails');
-                  return Container();
+                if(recipedetails!=null)
+                  {return Ingredients(recipedetails);}
+                else
+                  {
+                    return Container();
+                  }
               }
 
           },
         ),
-      ),
+
     ],
+  );
+}
+
+Widget Ingredients(MealsModel recipedetails)
+{
+  Map<String,String>IngredientMeasures= {
+    recipedetails.meals![0].strIngredient1!: recipedetails.meals![0]
+        .strMeasure1!,
+    recipedetails.meals![0].strIngredient2!: recipedetails.meals![0]
+        .strMeasure2!,
+    recipedetails.meals![0].strIngredient3!:recipedetails.meals![0].strMeasure3!,
+    recipedetails.meals![0].strIngredient4!:recipedetails.meals![0].strMeasure4!,
+    recipedetails.meals![0].strIngredient5!:recipedetails.meals![0].strMeasure5!,
+    recipedetails.meals![0].strIngredient6!:recipedetails.meals![0].strMeasure6!,
+    recipedetails.meals![0].strIngredient7!:recipedetails.meals![0].strMeasure7!,
+    recipedetails.meals![0].strIngredient8!:recipedetails.meals![0].strMeasure8!,
+    recipedetails.meals![0].strIngredient9!:recipedetails.meals![0].strMeasure9!,
+    recipedetails.meals![0].strIngredient10!:recipedetails.meals![0].strMeasure10!,
+    recipedetails.meals![0].strIngredient11!:recipedetails.meals![0].strMeasure11!,
+    recipedetails.meals![0].strIngredient12!:recipedetails.meals![0].strMeasure12!,
+    recipedetails.meals![0].strIngredient13!:recipedetails.meals![0].strMeasure13!,
+    recipedetails.meals![0].strIngredient14!:recipedetails.meals![0].strMeasure14!,
+    recipedetails.meals![0].strIngredient15!:recipedetails.meals![0].strMeasure15!,
+    recipedetails.meals![0].strIngredient16!:recipedetails.meals![0].strMeasure16!,
+    recipedetails.meals![0].strIngredient17!:recipedetails.meals![0].strMeasure17!,
+    recipedetails.meals![0].strIngredient18!:recipedetails.meals![0].strMeasure18!,
+    recipedetails.meals![0].strIngredient19!:recipedetails.meals![0].strMeasure19!,
+    recipedetails.meals![0].strIngredient20!:recipedetails.meals![0].strMeasure20!,
+  };
+
+  return Container(
+   child: Column(
+     children: [
+      IngredientMeasures.entries.where((element) => element.key.isNotEmpty && element.value.isNotEmpty)
+      .map((e) => {return Text('${e.key}:${e.value}')}.toList());
+     ],
+   ),
   );
 }

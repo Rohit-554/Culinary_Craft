@@ -65,10 +65,12 @@ class _MyRecipeCardState extends State<MyRecipeCard>
            context.pushRoute(MyRecipeDetail(snapshot: widget.snapshot,index: widget.index,));
         },
         child: Card(
-        elevation: 5,
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
+        color: Colors.white,
+
         child: ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -128,6 +130,7 @@ class _MyRecipeCardState extends State<MyRecipeCard>
                     ),
                   ),
                   Container(
+
                     width: 100,
                     height: 50,
                     child: Column(

@@ -21,7 +21,7 @@ class ApiService {
   static const String baseurl = 'https://www.themealdb.com';
   static const String endpoint = '/api/json/v1/1/filter.php';
   static const String endpoint1 = '/api/json/v1/1/search.php';
-  static const String endpointbyid='api/json/v1/1/lookup.php';
+  static const String endpointbyid='/api/json/v1/1/lookup.php';
   static String? xrapidapikey = dotenv.env['X-RapidAPI-Key'];
   static String? apikey = dotenv.env['apiKey'];
   late final Dio dio;
