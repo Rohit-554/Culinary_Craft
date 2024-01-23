@@ -14,7 +14,6 @@ import '../../models/meals/MealType.dart';
 class MyRecipeDetail extends StatefulWidget {
   final AsyncSnapshot<MealType> snapshot;
   final int index;
-
   MyRecipeDetail({required this.snapshot, required this.index});
 
   @override

@@ -131,9 +131,7 @@ builder: This parameter is a callback function that takes two arguments, context
   
   
   
-  
   Column getrecipesUI() {
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
