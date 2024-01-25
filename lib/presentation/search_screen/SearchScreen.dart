@@ -42,6 +42,7 @@ class MySearchPage extends State<SearchPage> {
                 child: SearchAnchor(
                     builder: (BuildContext context, SearchController controller) {
                       return SearchBar(
+
                         controller: controller,
                         backgroundColor: MaterialStateProperty.all(bottomNavbarColor),
                         elevation: MaterialStateProperty.all(2.0),
@@ -57,13 +58,13 @@ class MySearchPage extends State<SearchPage> {
                           controller.closeView(query);
                           print("query $value");
                         },
-                        leading: const Icon(Icons.search,color: Colors.deepOrange,),
+                        leading: const Icon(Icons.search,color: Colors.white,),
                         trailing: <Widget>[
                           Tooltip(
                             message: 'Filter',
                             child: IconButton(
                               onPressed: () {},
-                              icon: const Icon(Icons.filter_list_sharp, color: Colors.deepOrange,),
+                              icon: const Icon(Icons.filter_list_sharp, color: Colors.white,),
                             ),
                           )
                         ],
@@ -251,6 +252,15 @@ Future<Iterable<Widget>> buildRecipeFutureWidget(String query) async {
           onTap: () {
             // Handle tap on the search result item
           },
+          leading: Container(
+            width: 80,
+            height: 100,
+
+            decoration: BoxDecoration(shape: BoxShape.circle,
+              image: DecorationImage(fit: BoxFit.cover,image: NetworkImage(recipe.strMealThumb!)),
+            ),
+
+          ),
         );
       });
     }
