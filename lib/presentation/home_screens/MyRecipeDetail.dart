@@ -148,19 +148,25 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
                             Center(
                               child: getrecipedetails(widget.snapshot.data!.meals![widget.index].idMeal!),
                             ),
-                            Center(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Saumya",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                              ],
-                            ))
+                            Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start, // Align the column content to the start (left in this case)
+                                crossAxisAlignment: CrossAxisAlignment.start, // Align the children within the column to the start
+                                children: [
+                                  Padding(padding: EdgeInsets.only(left: 28,top: 16,right: 0,bottom: 4),
+                                    child:  Text(
+                                      "Saumya",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),)
+
+                                ],
+                              ),
+                            )
+
                           ],
                         ),
                       )
