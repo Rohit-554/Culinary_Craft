@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:fud/models/meals/MealsModel.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -181,36 +182,71 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
   }
 }
 
-Widget getrecipedetails(String id) {
-  return Column(
-    children: [
-      FutureBuilder<MealsModel>(
-        future: ApiService().getrecipebyid(id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            print('${snapshot.hasError}');
+MealsModel? extractDataFromSnapshot(AsyncSnapshot<MealsModel> snapshot) {
+  if (snapshot.connectionState == ConnectionState.waiting) {
+    // Data is still loading
+    return null;
+  } else if (snapshot.hasError) {
+    // Error occurred
+    print('${snapshot.hasError}');
+    return null;
+  } else if (snapshot.hasData == false) {
+    // No data available
+    return null;
+  } else {
+    print("snapshotdata${snapshot.data}");
+    // Data is available
+    return snapshot.data;
+  }
+}
 
-            return Center(child: Text('Error in fetching data'));
-          } else if (snapshot.hasData == false) {
-            return Center(child: Text('No data'));
-          } else {
-            MealsModel? recipedetails = snapshot.data;
-            print('recipe details$recipedetails');
-            if (recipedetails != null) {
-              return Ingredients(recipedetails);
-            } else {
-              return Container();
-            }
-          }
-        },
-      ),
-    ],
+
+Widget getrecipedetails(String id) {
+  return FutureBuilder<MealsModel>(
+    future: ApiService().getrecipebyid(id),
+    builder: (context, snapshot) {
+      MealsModel? recipedetails = extractDataFromSnapshot(snapshot);
+      if (recipedetails != null) {
+        print('recipe details $recipedetails');
+      }
+      
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error in fetching data'));
+      } else if (snapshot.hasData == false) {
+        return Center(child: Text('No data'));
+      } else {
+        return Ingredients(recipedetails!);
+      }
+    },
   );
 }
+
+// Widget getrecipedetails(String id) {
+//   return FutureBuilder<MealsModel>(
+//     future: ApiService().getrecipebyid(id),
+//     builder: (context, snapshot) {
+//       if (snapshot.connectionState == ConnectionState.waiting) {
+//         return const Center(
+//           child: CircularProgressIndicator(),
+//         );
+//       } else if (snapshot.hasError) {
+//         print('${snapshot.hasError}');
+//         return Center(child: Text('Error in fetching data'));
+//       } else if (snapshot.hasData == false) {
+//         return Center(child: Text('No data'));
+//       } else {
+//         MealsModel? recipedetails = snapshot.data;
+//         print('recipe details$recipedetails');
+//         return recipedetails != null ? Ingredients(recipedetails) : Container();
+//       }
+//     },
+//   );
+// }
+
 
 Widget Ingredients(MealsModel recipedetails) {
   Map<String, String> IngredientMeasures = {
@@ -256,31 +292,101 @@ Widget Ingredients(MealsModel recipedetails) {
         recipedetails.meals![0].strMeasure20!,
   };
 
+  final youtubeController = YoutubePlayerController(
+    initialVideoId: YoutubePlayer.convertUrlToId(recipedetails.meals![0].strYoutube!) ?? '',
+    flags: YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
+
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Column(
-      children: IngredientMeasures.entries
-          .where((element) => element.key.isNotEmpty && element.value.isNotEmpty)
-          .map((e) => Column(
-        children: [
-          ListTile(
-            title: Text(
-              '${e.key}: ${e.value}',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Display Meal ID in the top left
+        Text(
+          'Meal ID: ${recipedetails.meals![0].idMeal}',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.normal,
+          ),
+
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strDrinkAlternate
+        Text(
+          'Alternate Drink: ${recipedetails.meals![0].strDrinkAlternate}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0), // Add some space between details
+
+        // Display strCategory
+        Text(
+          'Category: ${recipedetails.meals![0].strCategory}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strArea
+        Text(
+          'Area: ${recipedetails.meals![0].strArea}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strTags in a rectangular box
+        Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[300]!),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Text(
+            'Tags: ${recipedetails.meals![0].strTags}',
+            style: TextStyle(
+              fontSize: 16.0,
             ),
           ),
-          Divider(
-            color: Colors.grey[300],
-            height: 1.0,
-          ),
-        ],
-      ))
-          .toList(),
+        ),
+        SizedBox(height: 16.0),
+
+        // Ingredients and Measures
+        Column(
+          children: IngredientMeasures.entries
+              .where((element) =>
+          element.key.isNotEmpty && element.value.isNotEmpty)
+              .map((e) => Column(
+            children: [
+              ListTile(
+                title: Text(
+                  '${e.key}: ${e.value}',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.grey[300],
+                height: 1.0,
+              ),
+            ],
+          ))
+              .toList(),
+        ),
+      ],
     ),
   );
+
 
 
 
