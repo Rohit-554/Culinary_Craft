@@ -246,15 +246,18 @@ Future<Iterable<Widget>> buildRecipeFutureWidget(String query) async {
     }else{
       return recipe.meals!.map((meal) {
         return ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(meal.strMealThumb!),
+          ),
           title: Text(meal.strMeal!),
           // Add other details as needed
           onTap: () {
             // Handle tap on the search result item
           },
         );
-      });
+      }
+  );
     }
-
   } catch (e) {
     print("error $e");
     return <Widget>[]; // Return an empty list in case of an error
