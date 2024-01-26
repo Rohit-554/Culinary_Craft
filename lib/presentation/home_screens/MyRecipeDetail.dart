@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:fud/colors/Colors.dart';
 import 'package:fud/data/remote/ApiService.dart';
 import 'package:fud/models/meals/MealsModel.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../models/meals/MealType.dart';
 
@@ -250,31 +251,101 @@ Widget Ingredients(MealsModel recipedetails) {
         recipedetails.meals![0].strMeasure20!,
   };
 
+  final youtubeController = YoutubePlayerController(
+    initialVideoId: YoutubePlayer.convertUrlToId(recipedetails.meals![0].strYoutube!) ?? '',
+    flags: YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
+
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Column(
-      children: IngredientMeasures.entries
-          .where((element) => element.key.isNotEmpty && element.value.isNotEmpty)
-          .map((e) => Column(
-        children: [
-          ListTile(
-            title: Text(
-              '${e.key}: ${e.value}',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Display Meal ID in the top left
+        Text(
+          'Meal ID: ${recipedetails.meals![0].idMeal}',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.normal,
+          ),
+
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strDrinkAlternate
+        Text(
+          'Alternate Drink: ${recipedetails.meals![0].strDrinkAlternate}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0), // Add some space between details
+
+        // Display strCategory
+        Text(
+          'Category: ${recipedetails.meals![0].strCategory}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strArea
+        Text(
+          'Area: ${recipedetails.meals![0].strArea}',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(height: 8.0),
+
+        // Display strTags in a rectangular box
+        Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[300]!),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Text(
+            'Tags: ${recipedetails.meals![0].strTags}',
+            style: TextStyle(
+              fontSize: 16.0,
             ),
           ),
-          Divider(
-            color: Colors.grey[300],
-            height: 1.0,
-          ),
-        ],
-      ))
-          .toList(),
+        ),
+        SizedBox(height: 16.0),
+
+        // Ingredients and Measures
+        Column(
+          children: IngredientMeasures.entries
+              .where((element) =>
+          element.key.isNotEmpty && element.value.isNotEmpty)
+              .map((e) => Column(
+            children: [
+              ListTile(
+                title: Text(
+                  '${e.key}: ${e.value}',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.grey[300],
+                height: 1.0,
+              ),
+            ],
+          ))
+              .toList(),
+        ),
+      ],
     ),
   );
+
 
 
 
