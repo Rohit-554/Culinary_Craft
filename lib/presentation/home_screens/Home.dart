@@ -86,13 +86,13 @@ class MyHomePage extends State<Home> {
                   onPressed: () {
                     context.router.push(SearchRoute());
                   },
-                  icon: Icon(Icons.search_rounded),
+                  icon: Icon(Icons.search_rounded,color: Colors.white ,),
                 ),
                 IconButton(
                   onPressed: () {
                     context.router.push(ProfileRoute());
                   },
-                  icon: Icon(Icons.person_outline_rounded),
+                  icon: Icon(Icons.person_outline_rounded,color: Colors.white,),
                 ),
               ],
             ),
@@ -100,7 +100,7 @@ class MyHomePage extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: fabButton,
+        backgroundColor: textOrange,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
         onPressed: () {},
         child: Icon(
