@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
+import 'package:fud/dialogHelper/exit_configuration.dart';
+import 'package:fud/presentation/home_screens/SettingScreen.dart';
 import 'package:fud/presentation/routes/AppRouter.gr.dart';
 
 @RoutePage()
@@ -28,7 +30,7 @@ class MyProfilePage extends State<ProfilePage> {
           actions: [
             IconButton(
               onPressed: () {
-                  context.pushRoute(SettingRoute());
+                  DialogHelper.exit(context);
               },
               icon: Icon(Icons.settings_outlined),
             ),
@@ -38,7 +40,6 @@ class MyProfilePage extends State<ProfilePage> {
             tabs: [
               Tab(text: 'Favourites'),
               Tab(text: 'My Recipe'),
-
             ],
             labelColor: fabButton, // Change the color for selected tab
             unselectedLabelColor: Colors.grey, // Change the color for unselected tabs
@@ -46,9 +47,8 @@ class MyProfilePage extends State<ProfilePage> {
         ),
         body: TabBarView(
           children: [
-          favourite(),
+            favourite(),
             myRecipe(),
-
           ],
         ),
       ),

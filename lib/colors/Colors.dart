@@ -6,3 +6,4 @@ const textOrange=Color(0xffDD6A00);
 const googleButton=Color(0xffd3f5ff);
 const bottomNavbarColor=Color(0xff33313B);
 const greyText=Color(0xff6A6A6A);
+const lightOrange=Color(0xffFF9431);
