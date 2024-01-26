@@ -24,7 +24,7 @@ class MySearchPage extends State<SearchPage> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
     _recipeFuture1 = ApiService().getRecipeBySearch('a');
     // _recipeFuture = ApiService().getRecipeBySearch(searchTerm);
   }

@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget {
@@ -25,7 +27,9 @@ class MyProfilePage extends State<ProfilePage> {
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                  context.pushRoute(SettingRoute());
+              },
               icon: Icon(Icons.settings_outlined),
             ),
           ],

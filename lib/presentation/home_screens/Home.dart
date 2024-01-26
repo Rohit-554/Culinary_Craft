@@ -32,7 +32,7 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody:true,
+      extendBody:true,//helps the fab to have a transparent background
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(''),
@@ -62,14 +62,8 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
         width: 56.0,
         height: 56.0,
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
+
+
           shape: BoxShape.circle,
         ),
         child: FloatingActionButton(
