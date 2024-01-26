@@ -182,36 +182,71 @@ class _MyRecipeDetailState extends State<MyRecipeDetail>
   }
 }
 
-Widget getrecipedetails(String id) {
-  return Column(
-    children: [
-      FutureBuilder<MealsModel>(
-        future: ApiService().getrecipebyid(id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            print('${snapshot.hasError}');
+MealsModel? extractDataFromSnapshot(AsyncSnapshot<MealsModel> snapshot) {
+  if (snapshot.connectionState == ConnectionState.waiting) {
+    // Data is still loading
+    return null;
+  } else if (snapshot.hasError) {
+    // Error occurred
+    print('${snapshot.hasError}');
+    return null;
+  } else if (snapshot.hasData == false) {
+    // No data available
+    return null;
+  } else {
+    print("snapshotdata${snapshot.data}");
+    // Data is available
+    return snapshot.data;
+  }
+}
 
-            return Center(child: Text('Error in fetching data'));
-          } else if (snapshot.hasData == false) {
-            return Center(child: Text('No data'));
-          } else {
-            MealsModel? recipedetails = snapshot.data;
-            print('recipe details$recipedetails');
-            if (recipedetails != null) {
-              return Ingredients(recipedetails);
-            } else {
-              return Container();
-            }
-          }
-        },
-      ),
-    ],
+
+Widget getrecipedetails(String id) {
+  return FutureBuilder<MealsModel>(
+    future: ApiService().getrecipebyid(id),
+    builder: (context, snapshot) {
+      MealsModel? recipedetails = extractDataFromSnapshot(snapshot);
+      if (recipedetails != null) {
+        print('recipe details $recipedetails');
+      }
+      
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error in fetching data'));
+      } else if (snapshot.hasData == false) {
+        return Center(child: Text('No data'));
+      } else {
+        return Ingredients(recipedetails!);
+      }
+    },
   );
 }
+
+// Widget getrecipedetails(String id) {
+//   return FutureBuilder<MealsModel>(
+//     future: ApiService().getrecipebyid(id),
+//     builder: (context, snapshot) {
+//       if (snapshot.connectionState == ConnectionState.waiting) {
+//         return const Center(
+//           child: CircularProgressIndicator(),
+//         );
+//       } else if (snapshot.hasError) {
+//         print('${snapshot.hasError}');
+//         return Center(child: Text('Error in fetching data'));
+//       } else if (snapshot.hasData == false) {
+//         return Center(child: Text('No data'));
+//       } else {
+//         MealsModel? recipedetails = snapshot.data;
+//         print('recipe details$recipedetails');
+//         return recipedetails != null ? Ingredients(recipedetails) : Container();
+//       }
+//     },
+//   );
+// }
+
 
 Widget Ingredients(MealsModel recipedetails) {
   Map<String, String> IngredientMeasures = {
