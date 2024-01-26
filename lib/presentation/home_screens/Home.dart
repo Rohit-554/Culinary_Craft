@@ -22,30 +22,18 @@ class Home extends StatefulWidget {
   MyHomePage createState() => MyHomePage();
 }
 
-class MyHomePage extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
-    // fetchrecipes();
-    // userLogOut();
-  }
+class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
 
-  void fetchrecipes() async {
-    MealType recipe = await ApiService().getrecipes();
-    print('recipelengthhaiye${recipe.meals?.length}');
-    // try {
-    //   Recipe recipe = await ApiService().getrecipes();
-    //   print('recipe$recipe');
-    // }
-    // catch (e) {
-    //   print('error $e');
-    // }
-  }
+  @override
+  bool get wantKeepAlive => true;
+
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    int currrentindex = 0;
     return Scaffold(
+      extendBody:true,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(''),
         backgroundColor: Colors.white,
@@ -70,6 +58,31 @@ class MyHomePage extends State<Home> {
         child: getrecipesUI(),
        // child: cuisineUI(),
       ),
+      floatingActionButton: Container(
+        width: 56.0,
+        height: 56.0,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 5,
+              offset: Offset(0, 2), // changes position of shadow
+            ),
+          ],
+          shape: BoxShape.circle,
+        ),
+        child: FloatingActionButton(
+          backgroundColor: textOrange,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
+          onPressed: () {},
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
         color: Colors.transparent,
         height: 60,
@@ -88,27 +101,23 @@ class MyHomePage extends State<Home> {
                   },
                   icon: Icon(Icons.search_rounded,color: Colors.white ,),
                 ),
+                SizedBox(width: 40),
                 IconButton(
                   onPressed: () {
                     context.router.push(ProfileRoute());
                   },
                   icon: Icon(Icons.person_outline_rounded,color: Colors.white,),
                 ),
+
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: textOrange,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
-        onPressed: () {},
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+
+
+
     );
     Widget buildbody() {}
   }
@@ -169,7 +178,7 @@ builder: This parameter is a callback function that takes two arguments, context
   }
 
   Widget RecipeWidget(AsyncSnapshot<MealType> snapshot) {
-    int _currentPage = 0;
+
     List<String> imagepath=[
       'assets/images/Indian_cuisine.jpg',
       'assets/images/american_cuisine_2.jpg',
@@ -224,6 +233,12 @@ builder: This parameter is a callback function that takes two arguments, context
                         itemBuilder: (context, index) {
                           return MyRecipeCard(snapshot: snapshot, index: index);
                         },
+                        onPageChanged: (index) {
+                          print('pagechanged $index');
+                          // setState(() {
+                          //   // _currentPage = index;
+                          // });
+                        },
                         // onPageChanged: (index) {
                         //   setState(() {
                         //     _currentPage = index;
@@ -231,21 +246,21 @@ builder: This parameter is a callback function that takes two arguments, context
                         // },
                       ),
                     ),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         5,
                         (index) => Indicator(
                           index: index,
-                          currentIndex: _currentPage,
+                          currentIndex: 0,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
               cuisineUI('Cuisine'),
-              
+
               Container(
                 height: 120,
                 child: ListView.builder(
@@ -273,7 +288,6 @@ builder: This parameter is a callback function that takes two arguments, context
                                     height: 80, // Adjust the height as needed
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(160), // Same radius as the Card
-
                                       image: DecorationImage(
                                         image: AssetImage(imagepath[index]),
                                         fit: BoxFit.cover,
