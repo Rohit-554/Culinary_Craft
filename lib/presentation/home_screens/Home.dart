@@ -100,7 +100,7 @@ class MyHomePage extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: fabButton,
+        backgroundColor: textOrange,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
         onPressed: () {},
         child: Icon(

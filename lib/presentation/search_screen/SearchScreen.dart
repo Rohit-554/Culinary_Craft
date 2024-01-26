@@ -246,22 +246,16 @@ Future<Iterable<Widget>> buildRecipeFutureWidget(String query) async {
       return <Widget>[];
     }else{
       return recipe.meals!.map((meal) {
+        print("Ye hai Meal ${meal.strMeal}");
         return ListTile(
           title: Text(meal.strMeal!),
           // Add other details as needed
           onTap: () {
             // Handle tap on the search result item
           },
-          leading: Container(
-            width: 80,
-            height: 100,
 
-            decoration: BoxDecoration(shape: BoxShape.circle,
-              image: DecorationImage(fit: BoxFit.cover,image: NetworkImage(recipe.strMealThumb!)),
-            ),
+          );
 
-          ),
-        );
       });
     }
 
