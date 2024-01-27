@@ -30,7 +30,7 @@ class MyProfilePage extends State<ProfilePage> {
           actions: [
             IconButton(
               onPressed: () {
-                  DialogHelper.exit(context);
+                  DialogHelper.exit(context);  //exit is variable can be replaced with show as well to show the dialog
               },
               icon: Icon(Icons.settings_outlined),
             ),
@@ -118,7 +118,7 @@ Center favourite(){
     ),
   );
 }
-
+  
 
 Center myRecipe(){
   return Center(

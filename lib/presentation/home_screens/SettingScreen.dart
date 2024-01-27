@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fud/colors/Colors.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 // @RoutePage()
 // class SettingScreen extends StatefulWidget{
 //   @override
@@ -33,8 +35,8 @@ class SettingScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 24,left: 24),
                   child:
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.height * 0.15,
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    width: MediaQuery.of(context).size.height * 0.12,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(80),
                       image: DecorationImage(
@@ -50,6 +52,13 @@ class SettingScreen extends StatelessWidget {
               children: [
                 CustomFilledButton(text: "About", onPressed: () {},
                   icon: Icons.info_outline,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                CustomFilledButton(text: "Log Out", onPressed: () {
+                  firebaseAuth.signOut();
+                  context.router.popUntil((route) => route.settings.name == LoginRoute.name);
+                },
+                  icon: Icons.logout,
                 ),
               ],
             ),
