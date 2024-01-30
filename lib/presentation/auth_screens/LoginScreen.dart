@@ -43,7 +43,7 @@ padding: EdgeInsets.only(top: 0),
               padding: EdgeInsets.only(top: 8),
               child: Image.asset(
                 'assets/images/loginpage.png',
-                width: 200,
+                width: MediaQuery.of(context).size.width * 0.8,
                 height: 200,
               ),
             ),

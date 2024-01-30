@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Culinary Craft',
       routerConfig: _approute.config() ,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
 
       ),

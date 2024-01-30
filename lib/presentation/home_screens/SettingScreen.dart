@@ -67,10 +67,6 @@ class SettingScreen extends StatelessWidget {
           ],
         ),
       )
-
-
-
-
     );
   }
 
@@ -83,13 +79,16 @@ class CustomFilledButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color fillColor;
   final IconData? icon;
-
+  final textcolor;
+  final textAlignment;
   const CustomFilledButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.fillColor = lightOrange,
     this.icon,
+    this.textcolor = Colors.black,
+    this.textAlignment = MainAxisAlignment.start,
   }) : super(key: key);
 
   @override
@@ -109,7 +108,7 @@ class CustomFilledButton extends StatelessWidget {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: textAlignment,
           children: [
             Icon(
               icon,
@@ -121,7 +120,7 @@ class CustomFilledButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Colors.black,
+                color: textcolor,
               ),
             ),
           ],
