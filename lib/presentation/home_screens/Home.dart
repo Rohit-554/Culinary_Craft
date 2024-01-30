@@ -69,7 +69,9 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
         child: FloatingActionButton(
           backgroundColor: textOrange,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(48)),
-          onPressed: () {},
+          onPressed: () {
+            context.router.push(AddRoute());
+          },
           child: Icon(
             Icons.add,
             color: Colors.white,
@@ -82,7 +84,7 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
         height: 60,
         child: BottomAppBar(
           shape: CircularNotchedRectangle(),
-          color: bottomNavbarColor,
+          color: bottomNavbarColor ,
           child: SizedBox(
             height: 60,
             child:

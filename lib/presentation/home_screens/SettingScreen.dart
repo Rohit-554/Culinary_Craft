@@ -50,7 +50,9 @@ class SettingScreen extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Adjust the spacing between the image and buttons
             Column(
               children: [
-                CustomFilledButton(text: "About", onPressed: () {},
+                CustomFilledButton(text: "About", onPressed: () {
+                     context.router.push(AboutRoute());
+                },
                   icon: Icons.info_outline,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
