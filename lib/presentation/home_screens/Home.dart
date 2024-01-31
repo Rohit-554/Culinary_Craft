@@ -33,10 +33,10 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody:true,//helps the fab to have a transparent background
-      backgroundColor: Colors.white,
+      backgroundColor: surfaceColor,
       appBar: AppBar(
         title: const Text(''),
-        backgroundColor: Colors.white,
+        backgroundColor: surfaceColor,
         scrolledUnderElevation: 0.0,
         automaticallyImplyLeading: false,
         actions: [
@@ -62,8 +62,6 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
         width: 56.0,
         height: 56.0,
         decoration: BoxDecoration(
-
-
           shape: BoxShape.circle,
         ),
         child: FloatingActionButton(
@@ -76,44 +74,71 @@ class MyHomePage extends State<Home> with AutomaticKeepAliveClientMixin {
             Icons.add,
             color: Colors.white,
           ),
+          elevation: 0.0,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
-        color: Colors.transparent,
         height: 60,
-        child: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          color: bottomNavbarColor ,
-          child: SizedBox(
-            height: 60,
-            child:
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    context.router.push(SearchRoute());
-                  },
-                  icon: Icon(Icons.search_rounded,color: Colors.white ,),
-                ),
-                SizedBox(width: 40),
-                IconButton(
-                  onPressed: () {
-                    context.router.push(ProfileRoute());
-                  },
-                  icon: Icon(Icons.person_outline_rounded,color: Colors.white,),
-                ),
-
-              ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+          child: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            color: Colors.white,
+            elevation: 0, // Set this to 0 since the shadow is applied in the outer container
+            surfaceTintColor: Colors.white,
+            child: SizedBox(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      context.router.push(SearchRoute());
+                    },
+                    icon: Icon(Icons.home_outlined, color: Colors.black54),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      context.router.push(SearchRoute());
+                    },
+                    icon: Icon(Icons.search_rounded, color: Colors.black54),
+                  ),
+                  SizedBox(width: 40),
+                  IconButton(
+                    onPressed: () {
+                      context.router.push(ProfileRoute());
+                    },
+                    icon: Icon(Icons.star_border_sharp, color: Colors.black54),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      context.router.push(ProfileRoute());
+                    },
+                    icon: Icon(Icons.person_outline_rounded, color: Colors.black54),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-
-
-
-
     );
     Widget buildbody() {}
   }
@@ -216,7 +241,7 @@ builder: This parameter is a callback function that takes two arguments, context
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: Colors.white,
+                color: surfaceColor,
                 child: greetWidget(),
               ),
               Container(
@@ -308,7 +333,6 @@ builder: This parameter is a callback function that takes two arguments, context
               cuisineUI('Category'),
               Container(
                 height: 120,
-
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -353,7 +377,7 @@ builder: This parameter is a callback function that takes two arguments, context
                   },
                 ),
               ),
-              Container(height: 20,),
+              Container(height: 20),
             ],
           );
         },
