@@ -17,5 +17,6 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: MyRecipeDetail.page),
     AutoRoute(page: AboutRoute.page),
     AutoRoute(page: AddRoute.page),
+    AutoRoute(page: IngredientsRoute.page),
   ];
 }
