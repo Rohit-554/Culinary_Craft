@@ -1,8 +1,9 @@
 import 'package:auto_route/annotations.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fud/presentation/routes/AppRouter.gr.dart';
 
 import '../../colors/Colors.dart';
 import 'SettingScreen.dart';
@@ -14,10 +15,10 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddState extends State<AddScreen> {
-  final _databaseRef = FirebaseDatabase.instance.ref('UserRecipes');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: surfaceColor,
         appBar: AppBar(),
         body: Column(
           children: [
@@ -37,21 +38,15 @@ class _AddState extends State<AddScreen> {
                               color: Colors.white,
                               border: Border.all(
                                 color: Colors.black54,
-                                width: 0.5,
+                                width: 0,
                               ),
                             ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_outlined,
-                                size: 100, // Adjust the size as needed
-                                color: Colors.black, // Adjust the color as needed
-                              ),
-                            ),
+
                           ),
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(top: 12,left: 12,right: 12,bottom: 8),
                           child: Positioned(
                             top: 0,
                             left: 0,
@@ -114,17 +109,21 @@ class _AddState extends State<AddScreen> {
                   ),
                   CustomFilledButton(
                     text: "Add Ingredients",
-                    onPressed: () {},
+                    onPressed: () {
+                      context.router.push(IngredientsRoute());
+                    },
                     icon: Icons.add_shopping_cart_outlined,
-                    isBorderEnabled: true,
+
                     fillColor: Colors.white,
                   ),
                   const SizedBox(height: 16),
                   CustomFilledButton(
                     text: "Add Instructions",
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     icon: Icons.emoji_food_beverage,
-                    isBorderEnabled: true,
+
                     fillColor: Colors.white,
                   ),
                   const SizedBox(height: 16),
@@ -133,7 +132,6 @@ class _AddState extends State<AddScreen> {
                     onPressed: () {},
                     icon: Icons.add_link,
                     fillColor: Colors.white,
-                    isBorderEnabled: true,
                   ),
                   SizedBox(height: 16),
                 ],
@@ -150,6 +148,8 @@ class _AddState extends State<AddScreen> {
             const SizedBox(height: 16),
           ],
         )
+
+
     );
   }
 }
